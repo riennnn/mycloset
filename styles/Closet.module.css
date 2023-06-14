@@ -1,0 +1,15 @@
+.category {
+  background-color: gray;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  margin-top: 20px;
+}
+
+.main {
+  min-height: 100vh;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,13 +1,13 @@
 import React from 'react'
-import Header from '../components/header'
+import Header from '../../components/header'
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import styles from '../styles/Create.module.css'
+import styles from '../../styles/Create.module.css'
 import { Box, Container, VStack, Input, Select, Textarea, Heading, Button, Spacer } from '@chakra-ui/react';
 import { ArrowBackIcon, RepeatIcon } from '@chakra-ui/icons';
 
-function Mypage() {
+function RecycleItem() {
   return (
-    <div style={{background:"url(/images/mypage.jpg)"}}>
+    <div style={{background:"url(/images/detailWall.jpg)"}}>
       <Header />
 
       <Box maxW="1080px" margin="0 auto" className='main'>
@@ -18,12 +18,12 @@ function Mypage() {
               as="h1"
               // mt="30px"
             >
-              My profile ...
+              Item to recycle ...
             </Heading>
             <Spacer />
             <Button 
               rightIcon={<ArrowBackIcon />} 
-              colorScheme='brown' 
+              colorScheme='blue' 
               variant='outline'
               // mt="32px"
               mr="10px"
@@ -32,7 +32,7 @@ function Mypage() {
             </Button>
             <Button 
               rightIcon={<RepeatIcon />} 
-              colorScheme='brown' 
+              colorScheme='blue' 
               variant='outline'
               // mt="32px"
             >
@@ -52,29 +52,29 @@ function Mypage() {
             </div>
             <VStack spacing={3} mt="3" width="600px">
               <Input 
-                placeholder='User Name'
+                placeholder='Product Name'
               />
               <Input 
-                placeholder='User ID'
+                placeholder='Shop Brand'
               />
-              {/* <Select placeholder='Category'>
+              <Select placeholder='Category'>
                 <option value='tops'>Tops</option>
                 <option value='bottoms'>Bottoms</option>
                 <option value='shoes'>Shoes</option>
                 <option value='others'>Others</option>
-              </Select> */}
+              </Select>
               <Input 
-                placeholder='e-mail'
+                placeholder='Purchase Amount ¥'
               />
-              {/* <Select placeholder='Wearing season'>
+              <Select placeholder='Wearing season'>
                 <option value="spring">Spring</option>
                 <option value="summer">Summer</option>
                 <option value="Autumn">Autumn</option>
                 <option value="Winter">Winter</option>
-              </Select> */}
-              {/* <Textarea 
+              </Select>
+              <Textarea 
                 placeholder='memo'
-              /> */}
+              />
             </VStack>
           </div>
         </Container>
@@ -83,4 +83,4 @@ function Mypage() {
   )
 }
 
-export default Mypage
+export default RecycleItem

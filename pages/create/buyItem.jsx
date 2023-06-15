@@ -4,8 +4,20 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import styles from '../../styles/Create.module.css'
 import { Box, Container, VStack, Input, Select, Textarea, Heading, Button, Spacer } from '@chakra-ui/react';
 import { AddIcon, ArrowBackIcon } from '@chakra-ui/icons';
+import { storage } from "../../libs/firebase";
+import { ref, uploadBytes } from 'firebase/storage';
 
 function BuyItem() {
+  const FileUpload = (e) => {
+    // console.log(e.target.files[0].name);
+    //ここまではOK 名前とれる
+    const file = e.target.files[0];
+    const storageRef = ref(storage, "image/" + file.name );
+    uploadBytes(storageRef, file).then((snapshot) => {
+      console.log('Uploaded a blob or file!');
+    });
+  };
+
   return (
     <div style={{background:"url(/images/createWall.jpg)"}}>
       <Header />
@@ -48,7 +60,12 @@ function BuyItem() {
                 <CameraAltIcon sx={{fontSize: 40}}/>
                 <p>ここにドラッグ＆ドロップしてね</p>
               </div>
-              <Input className={styles.imageUploadInput} />
+              <Input 
+                className={styles.imageUploadInput} 
+                type='file'
+                accept='.png, .jpeg, .jpg'
+                onChange={FileUpload}
+              />
             </div>
             <VStack spacing={3} mt="3" width="600px">
               <Input 

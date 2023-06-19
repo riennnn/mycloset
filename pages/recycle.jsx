@@ -28,7 +28,7 @@ function Recycle() {
             </Select>
             <Box ml="20px" mr="60px" mt="8px" >
               <AddToPhotosIcon
-                onClick={() => router.push('/create/recycleItem')}
+                onClick={() => router.push('/createItem')}
                 cursor="pointer"
               />
             </Box>

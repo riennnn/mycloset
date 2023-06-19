@@ -5,7 +5,7 @@ import { Button, Link } from '@chakra-ui/react'
 
 export default function Home() {
   return (
-    <div style={{background:"url(/images/closet.jpg)"}}>
+    <div style={{background:"url(/images/indexcloset.jpg)", backgroundSize: "cover", backgroundPosition: "50% 50%"}}>
       {/* 画像を一つにしたい */}
       <div className={styles.container}>
         <Head>

@@ -2,16 +2,16 @@
 //オブジェクトにまとめるとうまくコードに出来なかったので、一旦それぞれのstateを定義して書いた
 
 import React, { useState } from 'react'
-import Header from '../../components/header'
+import Header from '../components/header'
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import styles from '../../styles/Create.module.css'
+import styles from '../styles/Create.module.css'
 import { Box, Container, VStack, Input, Select, Textarea, Heading, Button, Spacer, Stack, Spinner } from '@chakra-ui/react';
 import { AddIcon, ArrowBackIcon } from '@chakra-ui/icons';
-import { db, storage } from "../../libs/firebase";
+import { db, storage } from "../libs/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { useRouter } from 'next/router';
-import { saveImageData } from '../../hooks/saveImageData';
+import { saveImageData } from '../hooks/saveImageData';
 
 function CreateItem() {
   // ローディングをしていない状態からスタート

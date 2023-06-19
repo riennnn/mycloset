@@ -27,7 +27,7 @@ function Buy() {
             </Select> */}
             <Box ml="20px" mr="60px" mt="8px" >
               <ShoppingCartIcon
-                onClick={() => router.push('/create/buyItem')}
+                onClick={() => router.push('/createItem')}
                 cursor="pointer"
               />
             </Box>

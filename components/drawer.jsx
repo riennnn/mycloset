@@ -37,6 +37,7 @@ function DrawerMenu() {
           <DrawerBody>
             <VStack spacing="6">
             <Link href='/mypage'><p>my page</p></Link>
+            <Link href='/createItem'><p>new item</p></Link>
             <Link href='/closet'><p>i have...</p></Link>
             <Link href='/buy'><p>i want to buy...</p></Link>
             <Link href='/recycle'><p>i want to recycle...</p></Link>

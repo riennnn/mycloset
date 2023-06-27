@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router';
 import Header from '../components/header'
 import { Box, HStack, Heading} from '@chakra-ui/react'
@@ -6,10 +6,18 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Container } from 'semantic-ui-react';
 import styles from '../styles/Closet.module.css'
 import Image from 'next/image'
+import ModeIcon from '@mui/icons-material/Mode';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { useItem } from "../hooks/useItem" 
 
 
 function Buy() {
   const router = useRouter();
+  const {items, setItems, readData} = useItem();
+
+  useEffect(() => {
+    readData();
+  },[])
 
   return (
     <div style={{background:"url(/images/baseWall2.jpg)"}}>
@@ -43,23 +51,46 @@ function Buy() {
             <Box width="50%">
               <p className={styles.category}>tops</p>
               <HStack spacing="10px" display="flex" mt="3">
-                <Image 
-                  src="/buy/tops.jpg"
-                  height={144}
-                  width={144}
-                  alt=""
-                />
+                {items.map((item) => {
+                  if(item.category === "tops" && item.itemStatus === "buy") {
+                    return (
+                      <Box key ={item.id}>
+                        <Image
+                          src={item.image}
+                          height={144}
+                          width={144}
+                          alt=""
+                        />
+                        <ModeIcon />
+                        <DeleteOutlineIcon />
+                      </Box>
+                    );
+                  }
+                  return null;
+                })}
               </HStack>
             </Box>
             <Box width="50%" ml="10px">
               <p className={styles.category}>bottoms</p>
               <HStack spacing="10px" display="flex" mt="3">
-                {/* <Image 
-                  src="/items/sampleBottoms.jpg"
-                  height={144}
-                  width={144}
-                  alt=""
-                /> */}
+                {items.map((item) => {
+                  if(item.category === "bottoms" && item.itemStatus === "buy") {
+                    // console.log("コンソール",item)
+                    return (
+                      <Box key ={item.id}>
+                        <Image
+                          src={item.image}
+                          height={144}
+                          width={144}
+                          alt=""
+                        />
+                        <ModeIcon />
+                        <DeleteOutlineIcon />
+                      </Box>
+                    );
+                  }
+                  return null;
+                })}
               </HStack>
             </Box>
           </Box>
@@ -67,29 +98,47 @@ function Buy() {
             <Box width="50%">
               <p className={styles.category}>shoes</p>
               <HStack spacing="10px" display="flex" mt="3">
-                <Image 
-                  src="/buy/boots.jpg"
-                  height={144}
-                  width={144}
-                  alt=""
-                />
+                {items.map((item) => {
+                  if(item.category === "shoes" && item.itemStatus === "buy") {
+                    // console.log("コンソール",item)
+                    return (
+                      <Box key ={item.id}>
+                        <Image
+                          src={item.image}
+                          height={144}
+                          width={144}
+                          alt=""
+                        />
+                        <ModeIcon />
+                        <DeleteOutlineIcon />
+                      </Box>
+                    );
+                  }
+                  return null;
+                })}
               </HStack>
             </Box>
             <Box width="50%" ml="10px">
               <p className={styles.category}>others</p>
               <HStack spacing="10px" display="flex" mt="3">
-                {/* <Image 
-                  src="/items/sampleBag.jpg"
-                  height={144}
-                  width={144}
-                  alt=""
-                />
-                <Image 
-                  src="/items/sampleJewery.jpg"
-                  height={144}
-                  width={144}
-                  alt=""
-                /> */}
+                {items.map((item) => {
+                  if(item.category === "others" && item.itemStatus === "buy") {
+                    // console.log("コンソール",item)
+                    return (
+                      <Box key ={item.id}>
+                        <Image
+                          src={item.image}
+                          height={144}
+                          width={144}
+                          alt=""
+                        />
+                        <ModeIcon />
+                        <DeleteOutlineIcon />
+                      </Box>
+                    );
+                  }
+                  return null;
+                })}
               </HStack>
             </Box>
           </Box>

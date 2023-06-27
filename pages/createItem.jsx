@@ -1,6 +1,3 @@
-// createitem にしてstateで管理する（buy,recycle, closet)がわかりやすい？
-//オブジェクトにまとめるとうまくコードに出来なかったので、一旦それぞれのstateを定義して書いた
-
 import React, { useState } from 'react'
 import Header from '../components/header'
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
@@ -167,7 +164,7 @@ function CreateItem() {
               variant="outline"
               // mt="32px"
               mr="10px"
-              onClick={() => router.push('/buy')}
+              onClick={() => router.push('/top')}
             >
               Back
             </Button>

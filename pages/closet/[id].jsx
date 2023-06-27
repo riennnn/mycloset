@@ -1,11 +1,53 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/header'
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import styles from '../../styles/Create.module.css'
-import { Box, Container, VStack, Input, Select, Textarea, Heading, Button, Spacer } from '@chakra-ui/react';
+import { Box, Container, VStack, Input, Heading, Button, Spacer } from '@chakra-ui/react';
 import { ArrowBackIcon, RepeatIcon } from '@chakra-ui/icons';
+import { useRouter } from  "next/router";
+import { db } from '../../libs/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import Image from 'next/image';
+import { DateDisplay } from '../../hooks/dateDisplay';
+
 
 function ClosetItem() {
+  const router = useRouter();
+  const itemId = router.query.id;
+  // console.log(router)
+
+  const [image, setImage] = useState("");
+  const [productName, setProductName] = useState("");
+  const [shopName, setShopName] = useState("");
+  const [category, setCategory] = useState("");
+  const [amount, setAmount] = useState("");
+  const [season ,setSeason] = useState("");
+  const [memo, setMemo] = useState("");
+  const [createDate, setCreateDate] = useState("");
+  const [updateDate, setUpdateDate] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const docRef = doc(db, "items", itemId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setImage(data.image);
+        setProductName(data.productName);
+        setShopName(data.shopName);
+        setCategory(data.category);
+        setAmount(data.amount);
+        setSeason(data.season);
+        setMemo(data.memo);
+        setCreateDate(data.createDate.toDate());
+        setUpdateDate(data.updateDate.toDate());
+      }
+    };
+
+    if (itemId) {
+      fetchData();
+    }
+  }, [itemId]);
+  
   return (
     <div style={{background:"url(/images/detailWall.jpg)"}}>
       <Header />
@@ -43,40 +85,34 @@ function ClosetItem() {
           <br />
           <div className={styles.outerBox}>
             <div className={styles.imageUplodeBox}>
-              <h2>New item</h2>
-              <div className={styles.imageLogoAndText}>
-                <CameraAltIcon sx={{fontSize: 40}}/>
-                <p>ここにドラッグ＆ドロップしてね</p>
-              </div>
+              <Image
+                src={image}
+                alt="Item Image"
+                width={300}
+                height={300}
+              />
               <Input className={styles.imageUploadInput} />
             </div>
+
             <VStack spacing={3} mt="3" width="600px">
-              <Input 
-                placeholder='Product Name'
-              />
-              <Input 
-                placeholder='Shop Brand'
-              />
-              <Select placeholder='Category'>
-                <option value='tops'>Tops</option>
-                <option value='bottoms'>Bottoms</option>
-                <option value='shoes'>Shoes</option>
-                <option value='others'>Others</option>
-              </Select>
-              <Input 
-                placeholder='Purchase Amount ¥'
-              />
-              <Select placeholder='Wearing season'>
-                <option value="spring">Spring</option>
-                <option value="summer">Summer</option>
-                <option value="Autumn">Autumn</option>
-                <option value="Winter">Winter</option>
-              </Select>
-              <Textarea 
-                placeholder='memo'
-              />
+              <p>Product Name: {productName}</p>
+              <p>Shop Brand: {shopName}</p>
+              <p>Category: {category}</p>
+              <p>Purchase Amount ¥  {amount}</p>
+              <p>Wearing season: {season}</p>
+              <p>Memo: {memo}</p>
             </VStack>
           </div>
+          <Box display="flex" float="right" mt="10px">
+            <Box>
+              <p>Create Date:</p>
+              <DateDisplay date={createDate}/>
+            </Box>
+            <Box ml="20px">
+              <p>Update Date:</p>
+              <DateDisplay date={updateDate}/>
+            </Box>
+          </Box>
         </Container>
       </Box>
     </div>

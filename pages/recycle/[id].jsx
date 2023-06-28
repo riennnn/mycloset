@@ -69,17 +69,11 @@ function RecycleItem() {
               variant='outline'
               // mt="32px"
               mr="10px"
+              onClick={() => router.push('/recycle')}
             >
               Back
             </Button>
-            <Button 
-              rightIcon={<RepeatIcon />} 
-              colorScheme='blue' 
-              variant='outline'
-              // mt="32px"
-            >
-              Update
-            </Button>
+            
           </Box>
           
           <br />
@@ -91,7 +85,6 @@ function RecycleItem() {
                 width={300}
                 height={300}
               />
-              <Input className={styles.imageUploadInput} />
             </div>
 
             <VStack spacing={3} mt="3" width="600px">

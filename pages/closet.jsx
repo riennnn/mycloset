@@ -5,13 +5,13 @@ import { Box, HStack, Heading, Select } from '@chakra-ui/react'
 import { Container } from 'semantic-ui-react';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import ModeIcon from '@mui/icons-material/Mode';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import { useItem } from "../hooks/useItem" 
 
 import styles from '../styles/Closet.module.css'
 import Image from 'next/image'
 import Link from 'next/link';
+import { DeleteButton } from '../components/DeleteButton';
 
 
 function Closet() {
@@ -77,6 +77,7 @@ function Closet() {
                     // console.log("コンソール",item)
                     return (
                       <Box key ={item.id}>
+                        {/* リンク追加※ */}
                         <Link href={`/closet/${item.id}`} as={`/closet/${item.id}`}>
                           <Image
                             src={item.image}
@@ -86,7 +87,7 @@ function Closet() {
                           />
                         </Link>
                         <ModeIcon />
-                        <DeleteOutlineIcon />
+                        <DeleteButton id={item.id} />
                       </Box>
                     );
                   }
@@ -110,7 +111,7 @@ function Closet() {
                           />
                         </Link>
                         <ModeIcon />
-                        <DeleteOutlineIcon />
+                        <DeleteButton id={item.id} />
                       </Box>
                     );
                   }
@@ -136,7 +137,7 @@ function Closet() {
                           />
                         </Link>
                         <ModeIcon />
-                        <DeleteOutlineIcon />
+                        <DeleteButton id={item.id} />
                       </Box>
                     );
                   }
@@ -160,7 +161,7 @@ function Closet() {
                           />
                         </Link>
                         <ModeIcon />
-                        <DeleteOutlineIcon />
+                        <DeleteButton id={item.id} />
                       </Box>
                     );
                   }

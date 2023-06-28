@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Header from '../../components/header'
 import styles from '../../styles/Create.module.css'
 import { Box, Container, VStack, Input, Heading, Button, Spacer } from '@chakra-ui/react';
-import { ArrowBackIcon, RepeatIcon } from '@chakra-ui/icons';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 import { useRouter } from  "next/router";
 import { db } from '../../libs/firebase';
 import { doc, getDoc } from 'firebase/firestore';
@@ -69,17 +69,11 @@ function BuyItem() {
               variant='outline'
               // mt="32px"
               mr="10px"
+              onClick={() => router.push('/buy')}
             >
               Back
             </Button>
-            <Button 
-              rightIcon={<RepeatIcon />} 
-              colorScheme='blue' 
-              variant='outline'
-              // mt="32px"
-            >
-              Update
-            </Button>
+            
           </Box>
           
           <br />
@@ -91,7 +85,6 @@ function BuyItem() {
                 width={300}
                 height={300}
               />
-              <Input className={styles.imageUploadInput} />
             </div>
 
             <VStack spacing={3} mt="3" width="600px">

@@ -8,7 +8,9 @@ import { db, storage } from "../libs/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { useRouter } from 'next/router';
-import { saveImageData } from '../hooks/saveImageData';
+import { UseSaveImageData } from '../hooks/useSaveImageData';
+import Image from 'next/image';
+
 
 function CreateItem() {
   // ローディングをしていない状態からスタート
@@ -114,7 +116,7 @@ function CreateItem() {
       itemStatus: itemStatus, 
     });
     try {
-      await saveImageData(image.name, imageURL);
+      await UseSaveImageData(image.name, imageURL);
       console.log("imageのメタデータがセーブされた");
       await addDoc(collection(db, "items"), {
         image:imageURL,

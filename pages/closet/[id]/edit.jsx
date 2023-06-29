@@ -2,92 +2,45 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from  "next/router";
 import Image from 'next/image';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { db, storage } from '../../../libs/firebase';
+import { db } from '../../../libs/firebase';
 import Header from '../../../components/header'
 import { DateDisplay } from '../../../hooks/dateDisplay';
 import styles from '../../../styles/Create.module.css'
 import { Box, Container, VStack, Input, Heading, Button, Spacer, Select, Textarea, Stack, Spinner } from '@chakra-ui/react';
 import { ArrowBackIcon, ChevronDownIcon, RepeatIcon } from '@chakra-ui/icons';
-
-
+import { UseFileUpload } from '../../../hooks/useFileUpload';
 
 
 function EditClosetItem() {
   const router = useRouter();
   const itemId = router.query.id;
   // console.log(router)
+  const {
+    loading,
+    isUploaded,
+    imageURL,
+    image,
+    setImage,
+    handleFileUpload,
+  } = UseFileUpload();
 
-  const [image, setImage] = useState("");
   const [productName, setProductName] = useState("");
   const [shopName, setShopName] = useState("");
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
   const [season ,setSeason] = useState("");
   const [memo, setMemo] = useState("");
-  const [itemStatus, setItemStatus] = useState("");
   const [createDate, setCreateDate] = useState("");
   const [updateDate, setUpdateDate] = useState("");
-  const [editItem, setEditItem] =  useState({
-    image: '',
-    productName: '',
-    shopName: '',
-    category: '',
-    amount: '',
-    season: '',
-    memo: '',
-    itemStatus: '',
-  });
-  const [loading, setLoading] = useState(false);
-  const [isUploaded, setIsUploaded] = useState(false);
-  const [imageURL, setImageURL] = useState("");
-
-  const FileUpload = (e) => {
-    // console.log(e.target.files[0].name);
-    //filesの中の名前とれる filesの0番目のnameの中にfile名がある
-    const file = e.target.files[0];
-    // const imageRef = ref(storage, "画像のパス");で保存ができる
-    //image/階層の中にfile名を入れて保存する
-    const imageRef = ref(storage, "image/" + file.name );
-    //↓画像アップロードできる
-    const uploadImage = uploadBytesResumable(imageRef, file);
-
-    uploadImage.on(
-      // 状態が変更されたときに変えていく↓
-      "state_changed",
-      (snapshot) => {
-        // ローディングをしている(true)
-        setLoading(true);
-      },
-      // エラーだったら。。。
-      (err) => {
-        console.log(err);
-      },
-      // ローディング完成したら。。。
-      async () => {
-        // ローディングが終わるのでfalseに戻している
-        setLoading(false);
-        // アップロードが完了したかどうか確認する
-        setIsUploaded(true);
-        try {
-          const url = await getDownloadURL(uploadImage.snapshot.ref);
-          setImageURL(url);
-          setImage(file);
-        } catch(error) {
-          console.log(error);
-        }
-      }
-    );
-  };
-
-
+  const [itemStatus, setItemStatus] = useState("");
+  
   useEffect(() => {
     const fetchData = async () => {
       const docRef = doc(db, "items", itemId);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const data = docSnap.data();
-        setImage(data.image);
+        setImage(data.image || imageURL);
         setProductName(data.productName);
         setShopName(data.shopName);
         setCategory(data.category);
@@ -97,13 +50,34 @@ function EditClosetItem() {
         setItemStatus(data.itemStatus);
         setCreateDate(data.createDate.toDate());
         setUpdateDate(data.updateDate.toDate());
-      }
+        setEditItem({
+          image: data.image || "", 
+          productName: data.productName,
+          shopName: data.shopName,
+          category: data.category,
+          amount: data.amount,
+          season: data.season,
+          memo: data.memo,
+          itemStatus: data.itemStatus,
+        });
+      } 
     };
 
     if (itemId) {
       fetchData();
     }
   }, [itemId]);
+
+  const [editItem, setEditItem] = useState({
+    image: '',
+    productName: '',
+    shopName: '',
+    category: '',
+    amount: '',
+    season: '',
+    memo: '',
+    itemStatus: '',
+  });
 
    //入力したimage保持（画面上）
   const handleChangeImage = (e) => {
@@ -149,9 +123,10 @@ function EditClosetItem() {
 
   useEffect(() => {
     const changeEditItem = () => {
-      setEditItem({
-        ...editItem,
-        image: imageURL,
+      setEditItem((prevEditItem) => {
+        return {
+          ...prevEditItem,
+        image: imageURL || prevEditItem.image,
         productName: productName,
         shopName: shopName,
         category: category,
@@ -160,6 +135,7 @@ function EditClosetItem() {
         memo: memo,
         itemStatus: itemStatus,
         imageURL: imageURL,
+        }
       });
     };
     changeEditItem();
@@ -169,23 +145,32 @@ function EditClosetItem() {
   const handleEditItem = async (e) => {
     e.preventDefault();
 
-    if (editItem.image.trim() === "") {
-      return alert("imageが空です");
-    } else if (editItem.productName.trim() === "") {
-      return alert("productNameが空です");
-    } else if (editItem.shopName.trim() === "") {
-      return alert("shopNameが空です");
-    } else if (editItem.category.trim() === "") {
-      return alert("categoryが空です");
-    } else if (editItem.amount.trim() === "") {
-      return alert("amountが空です");
-    } else if (editItem.season.trim() === "") {
-      return alert("seasonが空です");
-    } else if (editItem.memo.trim() === "") {
-      return alert("memoが空です");
-    } else if (editItem.itemStatus.trim() === "") {
-      return alert("itemStatusが空です");
+    if (
+      (editItem.image.trim() === "" || editItem.image === imageURL) &&
+      editItem.productName.trim() === "" &&
+      editItem.shopName.trim() === "" &&
+      editItem.category.trim() === "" &&
+      editItem.amount.trim() === "" &&
+      editItem.season.trim() === "" &&
+      editItem.memo.trim() === "" &&
+      editItem.itemStatus.trim() === ""
+    ) {
+      return alert("変更内容がありません");
     }
+
+    if (
+      editItem.productName.trim() === "" ||
+      editItem.shopName.trim() === "" ||
+      editItem.category.trim() === "" ||
+      editItem.amount.trim() === "" ||
+      editItem.season.trim() === "" ||
+      editItem.memo.trim() === "" ||
+      editItem.itemStatus.trim() === ""
+    ) {
+      return alert("全てのフィールドを入力してください");
+    }
+
+    const image = editItem.image && editItem.image.trim() === "" ? image : editItem.image;
 
     try {
       const docRef = doc(db, 'items', itemId);
@@ -205,9 +190,9 @@ function EditClosetItem() {
       console.log("error");
     }
     // topページに戻る
-    if (itemStatus === "have") {
+    if (editItem.itemStatus === "have") {
       router.push('/closet');
-    } else if (itemStatus === "buy") {
+    } else if (editItem.itemStatus === "buy") {
       router.push('/buy');
     } else {
       router.push('/recycle');
@@ -283,7 +268,7 @@ function EditClosetItem() {
                             className={styles.imageUploadInput}
                             type="file"
                             accept=".png, .jpeg, .jpg"
-                            onChange={FileUpload}
+                            onChange={handleFileUpload}
                           />
                           {imageURL && <img src={imageURL} alt="Uploaded" />}
                         </>
@@ -306,7 +291,7 @@ function EditClosetItem() {
                             //以下追加
                             type='file'
                             accept='.png, .jpeg, .jpg'
-                            onChange={FileUpload}
+                            onChange={handleFileUpload}
                           />
                         </>                
                       )}

@@ -37,7 +37,6 @@ function CreateItem() {
         alert("imageが入力されていません");
         return false;
       }
-
       const fields = [
         { value: productName.trim(), label: "productNameが入力されていません" },
         { value: shopName.trim(), label: "shopNameが入力されていません" },

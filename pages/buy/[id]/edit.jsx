@@ -1,6 +1,6 @@
 // showをそのままコピー
 import React, { useEffect, useState } from 'react'
-import Header from '../../components/header'
+import Header from '../../../components/header'
 import styles from '../../styles/Create.module.css'
 import { Box, Container, VStack, Input, Heading, Button, Spacer } from '@chakra-ui/react';
 import { ArrowBackIcon, RepeatIcon } from '@chakra-ui/icons';

@@ -1,53 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import Image from 'next/image';
+import { useRouter } from  "next/router";
 import Header from '../../components/header'
 import styles from '../../styles/Create.module.css'
-import { Box, Container, VStack, Input, Heading, Button, Spacer } from '@chakra-ui/react';
-import { ArrowBackIcon, RepeatIcon } from '@chakra-ui/icons';
-import { useRouter } from  "next/router";
-import { db } from '../../libs/firebase';
-import { doc, getDoc } from 'firebase/firestore';
-import Image from 'next/image';
+import useGetItem from '../../hooks/useGetItem';
 import { DateDisplay } from '../../hooks/dateDisplay';
+import { Box, Container, VStack, Heading, Button, Spacer } from '@chakra-ui/react';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 
 
 function RecycleItem() {
   const router = useRouter();
   const itemId = router.query.id;
+  const {image, productName,shopName, category, amount, season, memo, createDate, updateDate} = useGetItem(itemId);
   // console.log(router)
 
-  const [image, setImage] = useState("");
-  const [productName, setProductName] = useState("");
-  const [shopName, setShopName] = useState("");
-  const [category, setCategory] = useState("");
-  const [amount, setAmount] = useState("");
-  const [season ,setSeason] = useState("");
-  const [memo, setMemo] = useState("");
-  const [createDate, setCreateDate] = useState("");
-  const [updateDate, setUpdateDate] = useState("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const docRef = doc(db, "items", itemId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setImage(data.image);
-        setProductName(data.productName);
-        setShopName(data.shopName);
-        setCategory(data.category);
-        setAmount(data.amount);
-        setSeason(data.season);
-        setMemo(data.memo);
-        setCreateDate(data.createDate.toDate());
-        setUpdateDate(data.updateDate.toDate());
-      }
-    };
-
-    if (itemId) {
-      fetchData();
-    }
-  }, [itemId]);
-  
   return (
     <div style={{background:"url(/images/detailWall.jpg)"}}>
       <Header />
@@ -58,7 +25,6 @@ function RecycleItem() {
           <Box display="flex">
             <Heading
               as="h1"
-              // mt="30px"
             >
               Item to Recycle ...
             </Heading>
@@ -67,7 +33,6 @@ function RecycleItem() {
               rightIcon={<ArrowBackIcon />} 
               colorScheme='blue' 
               variant='outline'
-              // mt="32px"
               mr="10px"
               onClick={() => router.push('/recycle')}
             >

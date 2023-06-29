@@ -8,7 +8,7 @@ import Header from '../../../components/header'
 import { DateDisplay } from '../../../hooks/dateDisplay';
 import styles from '../../../styles/Create.module.css'
 import { Box, Container, VStack, Input, Heading, Button, Spacer, Select, Textarea, Stack, Spinner } from '@chakra-ui/react';
-import { ArrowBackIcon, ChevronDownIcon, RepeatIcon, TriangleDownIcon } from '@chakra-ui/icons';
+import { ArrowBackIcon, ChevronDownIcon, RepeatIcon } from '@chakra-ui/icons';
 
 
 
@@ -227,7 +227,6 @@ function EditClosetItem() {
           <Box display="flex" mt="3">
             <Heading
               as="h1"
-              // mt="30px"
             >
               My Closet Item ...
             </Heading>
@@ -236,7 +235,6 @@ function EditClosetItem() {
               rightIcon={<ArrowBackIcon />} 
               colorScheme='blue' 
               variant='outline'
-              // mt="32px"
               mr="10px"
               onClick={() => router.push('/closet')}
             >
@@ -247,7 +245,6 @@ function EditClosetItem() {
               rightIcon={<RepeatIcon />} 
               colorScheme='blue' 
               variant='outline'
-              // mt="32px"
               onClick={handleEditItem}
             >
               Update

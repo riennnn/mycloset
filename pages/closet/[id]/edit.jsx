@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from  "next/router";
 import Image from 'next/image';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../libs/firebase';
 import Header from '../../../components/header'
 import { DateDisplay } from '../../../hooks/dateDisplay';
@@ -9,6 +9,7 @@ import styles from '../../../styles/Create.module.css'
 import { Box, Container, VStack, Input, Heading, Button, Spacer, Select, Textarea, Stack, Spinner } from '@chakra-ui/react';
 import { ArrowBackIcon, ChevronDownIcon, RepeatIcon } from '@chakra-ui/icons';
 import { UseFileUpload } from '../../../hooks/useFileUpload';
+import useGetItemData from '../../../hooks/useGetItemData';
 
 
 function EditClosetItem() {
@@ -23,61 +24,26 @@ function EditClosetItem() {
     setImage,
     handleFileUpload,
   } = UseFileUpload();
-
-  const [productName, setProductName] = useState("");
-  const [shopName, setShopName] = useState("");
-  const [category, setCategory] = useState("");
-  const [amount, setAmount] = useState("");
-  const [season ,setSeason] = useState("");
-  const [memo, setMemo] = useState("");
-  const [createDate, setCreateDate] = useState("");
-  const [updateDate, setUpdateDate] = useState("");
-  const [itemStatus, setItemStatus] = useState("");
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      const docRef = doc(db, "items", itemId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setImage(data.image || imageURL);
-        setProductName(data.productName);
-        setShopName(data.shopName);
-        setCategory(data.category);
-        setAmount(data.amount);
-        setSeason(data.season);
-        setMemo(data.memo);
-        setItemStatus(data.itemStatus);
-        setCreateDate(data.createDate.toDate());
-        setUpdateDate(data.updateDate.toDate());
-        setEditItem({
-          image: data.image || "", 
-          productName: data.productName,
-          shopName: data.shopName,
-          category: data.category,
-          amount: data.amount,
-          season: data.season,
-          memo: data.memo,
-          itemStatus: data.itemStatus,
-        });
-      } 
-    };
-
-    if (itemId) {
-      fetchData();
-    }
-  }, [itemId]);
-
-  const [editItem, setEditItem] = useState({
-    image: '',
-    productName: '',
-    shopName: '',
-    category: '',
-    amount: '',
-    season: '',
-    memo: '',
-    itemStatus: '',
-  });
+  const {
+    productName,
+    setProductName,
+    shopName,
+    setShopName,
+    category,
+    setCategory,
+    amount,
+    setAmount,
+    season,
+    setSeason,
+    memo,
+    setMemo,
+    itemStatus,
+    setItemStatus,
+    createDate,
+    updateDate,
+    editItem,
+    setEditItem,
+  } = useGetItemData(itemId, image, setImage);
 
    //入力したimage保持（画面上）
   const handleChangeImage = (e) => {

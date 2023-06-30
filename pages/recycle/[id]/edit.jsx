@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../libs/firebase';
 import Header from '../../../components/header'
-import { DateDisplay } from '../../../hooks/dateDisplay';
+import { DateDisplay } from '../../../components/dateDisplay';
 import styles from '../../../styles/Create.module.css'
 import { Box, Container, VStack, Input, Heading, Button, Spacer, Select, Textarea, Stack, Spinner } from '@chakra-ui/react';
 import { ArrowBackIcon, ChevronDownIcon, RepeatIcon } from '@chakra-ui/icons';

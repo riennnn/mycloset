@@ -4,7 +4,7 @@ import { useRouter } from  "next/router";
 import Header from '../../components/header'
 import styles from '../../styles/Create.module.css'
 import useGetItem from '../../hooks/useGetItem';
-import { DateDisplay } from '../../hooks/dateDisplay';
+import { DateDisplay } from '../../components/dateDisplay';
 import { Box, Container, VStack, Heading, Button, Spacer } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 

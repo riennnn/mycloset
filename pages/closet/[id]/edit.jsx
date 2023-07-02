@@ -39,6 +39,8 @@ function EditClosetItem() {
     setMemo,
     itemStatus,
     setItemStatus,
+    salesStatus,
+    setSalesStatus,
     createDate,
     updateDate,
     editItem,
@@ -87,6 +89,11 @@ function EditClosetItem() {
     setItemStatus(e.target.value);
   }
 
+  //入力したsalesStatus保持（画面上）
+  const handleChangeSalesStatus = (e) => {
+    setSalesStatus(e.target.value);
+  }  
+
   useEffect(() => {
     const changeEditItem = () => {
       setEditItem((prevEditItem) => {
@@ -100,12 +107,13 @@ function EditClosetItem() {
         season: season,
         memo: memo,
         itemStatus: itemStatus,
+        salesStatus: salesStatus,
         imageURL: imageURL,
         }
       });
     };
     changeEditItem();
-  }, [image, productName,shopName,category,amount,season,memo,itemStatus, imageURL]);
+  }, [image, productName,shopName,category,amount,season,memo,itemStatus, salesStatus, imageURL]);
 
   //updateボタンを押したときの動作
   const handleEditItem = async (e) => {
@@ -119,7 +127,9 @@ function EditClosetItem() {
       editItem.amount.trim() === "" &&
       editItem.season.trim() === "" &&
       editItem.memo.trim() === "" &&
-      editItem.itemStatus.trim() === ""
+      editItem.itemStatus.trim() === "" &&
+      editItem.salesStatus.trim() === "" 
+
     ) {
       return alert("変更内容がありません");
     }
@@ -131,7 +141,9 @@ function EditClosetItem() {
       editItem.amount.trim() === "" ||
       editItem.season.trim() === "" ||
       editItem.memo.trim() === "" ||
-      editItem.itemStatus.trim() === ""
+      editItem.itemStatus.trim() === "" ||
+      editItem.salesStatus.trim() === ""
+
     ) {
       return alert("全てのフィールドを入力してください");
     }
@@ -149,6 +161,7 @@ function EditClosetItem() {
         season: editItem.season,
         memo: editItem.memo,
         itemStatus: editItem.itemStatus,
+        salesStatus: editItem.salesStatus,
         updateDate: new Date(),
       });
       console.log("success");
@@ -329,6 +342,19 @@ function EditClosetItem() {
                     <option value="have">Have</option>
                     <option value="buy">Buy</option>
                     <option value="recycle">Recycle</option>
+                  </Select>
+                  <div>Sales Status</div>
+                  <Select 
+                    value={salesStatus} 
+                    onChange={handleChangeSalesStatus} 
+                    icon={<ChevronDownIcon />} 
+                    width="400px"  
+                    border="2px dashed #2d6395"
+                  >
+                    <option value="notStarted">Not started</option>
+                    <option value="uploading">Uploading to the app</option>
+                    <option value="sold">Sold</option>
+                    <option value="wasted">Wasted</option>
                   </Select>
                 </VStack>
               </Box>

@@ -30,6 +30,7 @@ function CreateItem() {
   const [season ,setSeason] = useState("");
   const [memo, setMemo] = useState("");
   const [itemStatus, setItemStatus] = useState("");
+  const [salesStatus, setSalesStatus] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,6 +46,7 @@ function CreateItem() {
         { value: season.trim(), label: "seasonが選択されていません" },
         { value: memo.trim(), label: "memoが入力されていません" },
         { value: itemStatus.trim(), label: "itemStatusが選択されていません" },
+        { value: salesStatus.trim(), label: "salesStatusが選択されていません" },
       ];
       for (const field of fields) {
         if (field.value === "") {
@@ -64,6 +66,7 @@ function CreateItem() {
         season: season,
         memo: memo,
         itemStatus: itemStatus,
+        salesStatus: salesStatus,
         createDate: serverTimestamp(),
         updateDate: serverTimestamp(),
       });
@@ -75,6 +78,7 @@ function CreateItem() {
       setSeason("");
       setMemo("");
       setItemStatus("");
+      setSalesStatus("");
       if (itemStatus === "have") {
         router.push('/closet');
       } else if (itemStatus === "buy") {
@@ -233,6 +237,16 @@ function CreateItem() {
                     <option value="have">Have</option>
                     <option value="buy">Buy</option>
                     <option value="recycle">Recycle</option>
+                  </Select>
+                  <Select 
+                    placeholder="Sales Status"
+                    value={salesStatus}
+                    onChange={e => setSalesStatus(e.target.value)}
+                  >
+                    <option value="notStarted">Not started</option>
+                    <option value="uploading">Uploading to the app</option>
+                    <option value="sold">Sold</option>
+                    <option value="wasted">Wasted</option>
                   </Select>
                 </VStack>
               </Box>

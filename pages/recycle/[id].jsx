@@ -12,7 +12,7 @@ import { ArrowBackIcon } from '@chakra-ui/icons';
 function RecycleItem() {
   const router = useRouter();
   const itemId = router.query.id;
-  const {image, productName,shopName, category, amount, season, memo, createDate, updateDate} = useGetItem(itemId);
+  const {image, productName,shopName, category, amount, season, memo, salesStatus, createDate, updateDate} = useGetItem(itemId);
   // console.log(router)
 
   return (
@@ -59,6 +59,7 @@ function RecycleItem() {
               <p>Purchase Amount ¥  {amount}</p>
               <p>Wearing season: {season}</p>
               <p>Memo: {memo}</p>
+              <p>SalesStatus: {salesStatus}</p>
             </VStack>
           </div>
           <Box display="flex" float="right" mt="10px">

@@ -10,9 +10,10 @@ const useGetItemData = (itemId, image, setImage) => {
   const [amount, setAmount] = useState("");
   const [season ,setSeason] = useState("");
   const [memo, setMemo] = useState("");
+  const [itemStatus, setItemStatus] = useState("");
+  const [salesStatus, setSalesStatus] = useState("");
   const [createDate, setCreateDate] = useState("");
   const [updateDate, setUpdateDate] = useState("");
-  const [itemStatus, setItemStatus] = useState("");
   const [editItem, setEditItem] = useState({
     image: '',
     productName: '',
@@ -22,6 +23,7 @@ const useGetItemData = (itemId, image, setImage) => {
     season: '',
     memo: '',
     itemStatus: '',
+    salesStatus: '',
   });
   
   useEffect(() => {
@@ -38,6 +40,7 @@ const useGetItemData = (itemId, image, setImage) => {
         setSeason(data.season);
         setMemo(data.memo);
         setItemStatus(data.itemStatus);
+        setSalesStatus(data.salesStatus);
         setCreateDate(data.createDate.toDate());
         setUpdateDate(data.updateDate.toDate());
         setEditItem({
@@ -49,6 +52,7 @@ const useGetItemData = (itemId, image, setImage) => {
           season: data.season,
           memo: data.memo,
           itemStatus: data.itemStatus,
+          salesStatus: data.salesStatus,
         });
       } 
     };
@@ -72,6 +76,8 @@ const useGetItemData = (itemId, image, setImage) => {
     setMemo,
     itemStatus,
     setItemStatus,
+    salesStatus,
+    setSalesStatus,
     createDate,
     updateDate,
     editItem,

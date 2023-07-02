@@ -11,6 +11,7 @@ const useGetItem = (itemId) => {
   const [amount, setAmount] = useState("");
   const [season ,setSeason] = useState("");
   const [memo, setMemo] = useState("");
+  const [salesStatus, setSalesStatus] = useState("");
   const [createDate, setCreateDate] = useState("");
   const [updateDate, setUpdateDate] = useState("");
 
@@ -27,6 +28,7 @@ const useGetItem = (itemId) => {
         setAmount(data.amount);
         setSeason(data.season);
         setMemo(data.memo);
+        setSalesStatus(data.salesStatus);
         setCreateDate(data.createDate.toDate());
         setUpdateDate(data.updateDate.toDate());
       }
@@ -45,6 +47,7 @@ const useGetItem = (itemId) => {
     amount,
     season,
     memo,
+    salesStatus,
     createDate,
     updateDate,
   };

@@ -49,8 +49,8 @@ function Closet() {
               <option value="all season">All season</option>
               <option value="spring">Spring</option>
               <option value="summer">Summer</option>
-              <option value="Autumn">Autumn</option>
-              <option value="Winter">Winter</option>
+              <option value="autumn">Autumn</option>
+              <option value="winter">Winter</option>
             </Select>
             <Box ml="20px" mr="60px" mt="8px" >
               <AddToPhotosIcon

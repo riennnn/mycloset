@@ -22,6 +22,7 @@ export const useItem = () => {
           season: data.season || "",
           memo: data.memo || "",
           itemStatus: data.itemStatus || "",
+          salesStatus: data.salesStatus || "",
           createDate: data.createDate ? data.createDate.toDate().toString() : null,
           updateDate: data.updateDate ? data.updateDate.toDate().toString() : null,
         };

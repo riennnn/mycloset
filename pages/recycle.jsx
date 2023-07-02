@@ -21,15 +21,15 @@ function Recycle() {
     readData();
   },[])
 
-  const [salesFilter, setSalesFilter] = useState("item sales");
+  const [salesFilter, setSalesFilter] = useState("salesStatus");
   const [salesFilteredItems, setSalesFilteredItems] = useState([]);
 
   useEffect(() => {
     const filteringItems = () => {
-      if (salesFilter === "item sales") {
+      if (salesFilter === "salesStatus") {
         setSalesFilteredItems (items);
       } else {
-        const filteredItems = items.filter((item) => item.sales === salesFilter);
+        const filteredItems = items.filter((item) => item.salesStatus === salesFilter);
         setSalesFilteredItems(filteredItems);
       }
     };
@@ -48,7 +48,7 @@ function Recycle() {
           <Box display="flex" float="right">
             <Select variant="flushed" width="280px" value={salesFilter} onChange={(e) => setSalesFilter(e.target.value)}>
               <option
-              value="sales status">Sales Status</option>
+              value="salesStatus">Sales Status</option>
               <option value="notStarted">Not started</option>
               <option value="uploading">Uploading to the app</option>
               <option value="sold">Sold</option>

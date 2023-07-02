@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { useItem } from "../hooks/useItem" 
 import Header from '../components/header'
-import { Box, HStack, Heading, Select } from '@chakra-ui/react'
+import { DeleteButton } from '../components/DeleteButton';
+import styles from '../styles/Closet.module.css'
+import { Box,  Heading, Select } from '@chakra-ui/react'
 import { Container } from 'semantic-ui-react';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import ModeIcon from '@mui/icons-material/Mode';
 
-import { useItem } from "../hooks/useItem" 
-
-import styles from '../styles/Closet.module.css'
-import Image from 'next/image'
-import Link from 'next/link';
-import { DeleteButton } from '../components/DeleteButton';
 
 
 function Closet() {
   const router = useRouter();
-  const {items, setItems, readData} = useItem();
+  const {items, readData} = useItem();
 
   useEffect(() => {
     readData();
@@ -39,7 +38,6 @@ function Closet() {
   },[items, seasonFilter]);
 
   return (
-
     <div style={{background:"url(/images/baseWall2.jpg)"}}>
       <Header />
 
@@ -68,106 +66,152 @@ function Closet() {
           >
             i have ...
           </Heading>
-          <Box display="flex">
+          <Box display="flex" height="300px">
             <Box width="50%">
               <p className={styles.category}>tops</p>
-              <HStack spacing="10px" display="flex" mt="3">
+              <Box className={styles.imageGroup}>
                 {seasonFilteredItems.map((item) => {
                   if(item.category === "tops" && item.itemStatus === "have") {
-                    // console.log("コンソール",item)
                     return (
-                      <Box key ={item.id}>
-                        {/* リンク追加※ */}
+                      <Box key ={item.id} className={styles.imageContainer}>
                         <Link href={`/closet/${item.id}`} as={`/closet/${item.id}`}>
-                          <Image
-                            src={item.image}
-                            height={144}
-                            width={144}
-                            alt=""
-                          />
+                          <div className={styles.imageWrapper}>
+                            <Image
+                              src={item.image}
+                              height={200}
+                              width={150}
+                              alt=""
+                              className={styles.image}
+                            />
+                          </div>
                         </Link>
-                        <ModeIcon />
-                        <DeleteButton id={item.id} />
+                        <Box className={styles.iconGroup}>
+                          <Box>
+                            <ModeIcon 
+                              onClick={() => router.push(`/closet/${item.id}/edit`)}
+                              cursor="pointer"
+                            />
+                          </Box>
+                          <Box ml="5">
+                            <DeleteButton id={item.id} />
+                          </Box>
+                        </Box>
                       </Box>
                     );
                   }
                   return null;
                 })}
-              </HStack>
+              </Box>
             </Box>
             <Box width="50%" ml="10px">
               <p className={styles.category}>bottoms</p>
-              <HStack spacing="10px" display="flex" mt="3">
+              <Box className={styles.imageGroup}>
                 {seasonFilteredItems.map((item) => {
                   if(item.category === "bottoms" && item.itemStatus === "have") {
                     return (
-                      <Box key ={item.id}>
+                      <Box key ={item.id} className={styles.imageContainer}>
                         <Link href={`/closet/${item.id}`} as={`/closet/${item.id}`}>
-                          <Image
-                            src={item.image}
-                            height={144}
-                            width={144}
-                            alt=""
-                          />
+                          <div className={styles.imageWrapper}>
+                            <Image
+                              src={item.image}
+                              height={200}
+                              width={150}
+                              alt=""
+                              className={styles.image}
+                            />
+                          </div>
                         </Link>
-                        <ModeIcon />
-                        <DeleteButton id={item.id} />
+                        <Box className={styles.iconGroup}>
+                          <Box>
+                            <ModeIcon 
+                              onClick={() => router.push(`/closet/${item.id}/edit`)}
+                              cursor="pointer"
+                            />
+                          </Box>
+                          <Box ml="5">
+                            <DeleteButton id={item.id} />
+                          </Box>
+                        </Box>
                       </Box>
                     );
                   }
                   return null;
                 })}        
-              </HStack>
+              </Box>
             </Box>
           </Box>
-          <Box display="flex" mt="10px">
+          <Box display="flex" height="300px" mt="10px">
             <Box width="50%">
               <p className={styles.category}>shoes</p>
-              <HStack spacing="10px" display="flex" mt="3">
+              <Box className={styles.imageGroup}>
                 {seasonFilteredItems.map((item) => {
                   if(item.category === "shoes" && item.itemStatus === "have") {
                     return (
-                      <Box key ={item.id}>
+                      <Box key ={item.id} className={styles.imageContainer}>
                         <Link href={`/closet/${item.id}`} as={`/closet/${item.id}`}>
-                          <Image
-                            src={item.image}
-                            height={144}
-                            width={144}
-                            alt=""
-                          />
+                          <div className={styles.imageWrapper}>
+                            <Image
+                              src={item.image}
+                              height={200}
+                              width={150}
+                              alt=""
+                              className={styles.image}
+                            />
+                          </div>
                         </Link>
-                        <ModeIcon />
-                        <DeleteButton id={item.id} />
+                        <Box className={styles.iconGroup}>
+                          <Box>
+                            <ModeIcon 
+                              onClick={() => router.push(`/closet/${item.id}/edit`)}
+                              cursor="pointer"
+                            />
+                          </Box>
+                          <Box ml="5">
+                            <DeleteButton id={item.id} />
+                          </Box>
+                        </Box>
                       </Box>
                     );
                   }
                   return null;
                 })}
-              </HStack>
+              </Box>
             </Box>
             <Box width="50%" ml="10px">
               <p className={styles.category}>others</p>
-              <HStack spacing="10px" display="flex" mt="3">
+              <Box className={styles.imageGroup}>
                 {seasonFilteredItems.map((item) => {
                   if(item.category === "others" && item.itemStatus === "have") {
                     return (
-                      <Box key ={item.id}>
+                      <Box key ={item.id}  className={styles.imageContainer}>
                         <Link href={`/closet/${item.id}`} as={`/closet/${item.id}`}>
-                          <Image
-                            src={item.image}
-                            height={144}
-                            width={144}
-                            alt=""
-                          />
+                          <div className={styles.imageWrapper}>
+                            <Image
+                              src={item.image}
+                              height={200}
+                              width={150}
+                              alt=""
+                              className={styles.image}
+                            />
+                          </div>
                         </Link>
-                        <ModeIcon />
-                        <DeleteButton id={item.id} />
+                        <Box className={styles.iconGroup}>
+                          <Box>
+                            <ModeIcon 
+                              onClick={() => router.push(`/closet/${item.id}/edit`)}
+                              cursor="pointer"
+                            />
+                          </Box>
+                          <Box ml="5">
+                            <DeleteButton id={item.id} />
+                          </Box>
+                        </Box>
                       </Box>
                     );
                   }
                   return null;
                 })}
-              </HStack>
+              </Box>
             </Box>
           </Box>
         </Container>

@@ -1,24 +1,42 @@
-import React, { useEffect } from 'react'
-import { useRouter } from 'next/router';
-import Header from '../components/header'
-import { Box, HStack, Heading, Select} from '@chakra-ui/react'
-import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
-import { Container } from 'semantic-ui-react';
-import styles from '../styles/Closet.module.css'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import ModeIcon from '@mui/icons-material/Mode';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { useItem } from "../hooks/useItem" 
+import Header from '../components/header'
+import { DeleteButton } from '../components/DeleteButton';
+import styles from '../styles/Closet.module.css'
+import { Box, Heading, Select} from '@chakra-ui/react'
+import { Container } from 'semantic-ui-react';
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import ModeIcon from '@mui/icons-material/Mode';
+
 
 
 function Recycle() {
   const router = useRouter();
-
-  const {items, setItems, readData} = useItem();
+  const {items, readData} = useItem();
 
   useEffect(() => {
     readData();
   },[])
+
+  const [salesFilter, setSalesFilter] = useState("item sales");
+  const [salesFilteredItems, setSalesFilteredItems] = useState([]);
+
+  useEffect(() => {
+    const filteringItems = () => {
+      if (salesFilter === "item sales") {
+        setSalesFilteredItems (items);
+      } else {
+        const filteredItems = items.filter((item) => item.sales === salesFilter);
+        setSalesFilteredItems(filteredItems);
+      }
+    };
+
+    filteringItems();
+  },[items, salesFilter]);
+
 
   return (
     <div style={{background:"url(/images/baseWall2.jpg)"}}>
@@ -28,7 +46,9 @@ function Recycle() {
         <Container w="100%" maxW="1080px">
 
           <Box display="flex" float="right">
-            <Select variant="flushed" width="280px" placeholder='item status'>
+            <Select variant="flushed" width="280px" value={salesFilter} onChange={(e) => setSalesFilter(e.target.value)}>
+              <option
+              value="sales status">Sales Status</option>
               <option value="notStarted">Not started</option>
               <option value="uploading">Uploading to the app</option>
               <option value="sold">Sold</option>
@@ -48,96 +68,152 @@ function Recycle() {
           >
             i want to Recycle ...
           </Heading>
-          <Box display="flex">
+          <Box display="flex" height="300px">
             <Box width="50%">
               <p className={styles.category}>tops</p>
-              <HStack spacing="10px" display="flex" mt="3">
-                {items.map((item) => {
+              <Box className={styles.imageGroup}>
+                {salesFilteredItems.map((item) => {
                   if(item.category === "tops" && item.itemStatus === "recycle") {
                     return (
-                      <Box key ={item.id}>
-                        <Image
-                          src={item.image}
-                          height={144}
-                          width={144}
-                          alt=""
-                        />
-                        <ModeIcon />
-                        <DeleteOutlineIcon />
+                      <Box key ={item.id} className={styles.imageContainer}>
+                        <Link href={`/recycle/${item.id}`} as={`/recycle/${item.id}`}>
+                          <div className={styles.imageWrapper}>
+                            <Image
+                              src={item.image}
+                              height={200}
+                              width={150}
+                              alt=""
+                              className={styles.image}
+                            />
+                          </div>
+                        </Link>
+                        <Box className={styles.iconGroup}>
+                          <Box>
+                            <ModeIcon 
+                              onClick={() => router.push(`/recycle/${item.id}/edit`)}
+                              cursor="pointer"
+                            />
+                          </Box>
+                          <Box ml="5">
+                            <DeleteButton id={item.id} />
+                          </Box>
+                        </Box>
                       </Box>
                     );
                   }
                   return null;
                 })}
-              </HStack>
+              </Box>
             </Box>
             <Box width="50%" ml="10px">
               <p className={styles.category}>bottoms</p>
-              <HStack spacing="10px" display="flex" mt="3">
-                {items.map((item) => {
+              <Box className={styles.imageGroup}>
+                {salesFilteredItems.map((item) => {
                   if(item.category === "bottoms" && item.itemStatus === "recycle") {
                     return (
-                      <Box key ={item.id}>
-                        <Image
-                          src={item.image}
-                          height={144}
-                          width={144}
-                          alt=""
-                        />
-                        <ModeIcon />
-                        <DeleteOutlineIcon />
+                      <Box key ={item.id} className={styles.imageContainer}>
+                        <Link href={`/recycle/${item.id}`} as={`/recycle/${item.id}`}>
+                          <div className={styles.imageWrapper}>
+                            <Image
+                              src={item.image}
+                              height={200}
+                              width={150}
+                              alt=""
+                              className={styles.image}
+                            />
+                          </div>
+                        </Link>
+                        <Box className={styles.iconGroup}>
+                          <Box>
+                            <ModeIcon 
+                              onClick={() => router.push(`/recycle/${item.id}/edit`)}
+                              cursor="pointer"
+                            />
+                          </Box>
+                          <Box ml="5">
+                            <DeleteButton id={item.id} />
+                          </Box>
+                        </Box>
                       </Box>
                     );
                   }
                   return null;
                 })}
-              </HStack>
+              </Box>
             </Box>
           </Box>
-          <Box display="flex" mt="10px">
+          <Box display="flex" height="300px" mt="10px">
             <Box width="50%">
               <p className={styles.category}>shoes</p>
-              <HStack spacing="10px" display="flex" mt="3">
-                {items.map((item) => {
+              <Box className={styles.imageGroup}>
+                {salesFilteredItems.map((item) => {
                   if(item.category === "shoes" && item.itemStatus === "recycle") {
                     return (
-                      <Box key ={item.id}>
-                        <Image
-                          src={item.image}
-                          height={144}
-                          width={144}
-                          alt=""
-                        />
-                        <ModeIcon />
-                        <DeleteOutlineIcon />
+                      <Box key ={item.id} className={styles.imageContainer}>
+                        <Link href={`/recycle/${item.id}`} as={`/recycle/${item.id}`}>
+                          <div className={styles.imageWrapper}>
+                            <Image
+                              src={item.image}
+                              height={200}
+                              width={150}
+                              alt=""
+                              className={styles.image}
+                            />
+                          </div>
+                        </Link>
+                        <Box className={styles.iconGroup}>
+                          <Box>
+                            <ModeIcon 
+                              onClick={() => router.push(`/recycle/${item.id}/edit`)}
+                              cursor="pointer"
+                            />
+                          </Box>
+                          <Box ml="5">
+                            <DeleteButton id={item.id} />
+                          </Box>
+                        </Box>
                       </Box>
                     );
                   }
                   return null;
                 })}
-              </HStack>
+              </Box>
             </Box>
             <Box width="50%" ml="10px">
               <p className={styles.category}>others</p>
-              <HStack spacing="10px" display="flex" mt="3">
-                {items.map((item) => {
+              <Box className={styles.imageGroup}>
+                {salesFilteredItems.map((item) => {
                   if(item.category === "others" && item.itemStatus === "recycle") {
                     return (
-                      <Box key ={item.id}>
-                        <Image
-                          src={item.image}
-                          height={144}
-                          width={144}
-                          alt=""
-                        />
-                        <ModeIcon />
-                        <DeleteOutlineIcon />
+                      <Box key ={item.id} className={styles.imageContainer}>
+                        <Link href={`/recycle/${item.id}`} as={`/recycle/${item.id}`}>
+                          <div className={styles.imageWrapper}>
+                            <Image
+                              src={item.image}
+                              height={200}
+                              width={150}
+                              alt=""
+                              className={styles.image}
+                            />
+                          </div>
+                        </Link>
+                        <Box className={styles.iconGroup}>
+                          <Box>
+                            <ModeIcon 
+                              onClick={() => router.push(`/recycle/${item.id}/edit`)}
+                              cursor="pointer"
+                            />
+                          </Box>
+                          <Box ml="5">
+                            <DeleteButton id={item.id} />
+                          </Box>
+                        </Box>
                       </Box>
                     );
                   }
                   return null;
                 })}
-              </HStack>
+              </Box>
             </Box>
           </Box>
         </Container>

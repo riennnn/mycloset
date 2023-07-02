@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react'
-import { useRouter } from 'next/router';
-import Header from '../components/header'
-import { Box, HStack, Heading} from '@chakra-ui/react'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Container } from 'semantic-ui-react';
-import styles from '../styles/Closet.module.css'
+import { useEffect } from 'react'
 import Image from 'next/image'
-import ModeIcon from '@mui/icons-material/Mode';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { useItem } from "../hooks/useItem" 
+import Header from '../components/header'
+import { DeleteButton } from '../components/DeleteButton';
+import styles from '../styles/Closet.module.css'
+import { Box, Heading} from '@chakra-ui/react'
+import { Container } from 'semantic-ui-react';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ModeIcon from '@mui/icons-material/Mode';
 
 
 function Buy() {
   const router = useRouter();
-  const {items, setItems, readData} = useItem();
+  const {items,  readData} = useItem();
 
   useEffect(() => {
     readData();
@@ -27,12 +28,6 @@ function Buy() {
         <Container w="100%" maxW="1080px">
 
           <Box display="flex" float="right">
-            {/* <Select variant="flushed" width="280px" placeholder='All season'>
-              <option value="spring">Spring</option>
-              <option value="summer">Summer</option>
-              <option value="Autumn">Autumn</option>
-              <option value="Winter">Winter</option>
-            </Select> */}
             <Box ml="20px" mr="60px" mt="8px" >
               <ShoppingCartIcon
                 onClick={() => router.push('/createItem')}
@@ -47,99 +42,152 @@ function Buy() {
           >
             i want to buy ...
           </Heading>
-          <Box display="flex">
+          <Box display="flex" height="300px">
             <Box width="50%">
               <p className={styles.category}>tops</p>
-              <HStack spacing="10px" display="flex" mt="3">
+              <Box className={styles.imageGroup}>
                 {items.map((item) => {
                   if(item.category === "tops" && item.itemStatus === "buy") {
                     return (
-                      <Box key ={item.id}>
-                        <Image
-                          src={item.image}
-                          height={144}
-                          width={144}
-                          alt=""
-                        />
-                        <ModeIcon />
-                        <DeleteOutlineIcon />
+                      <Box key ={item.id} className={styles.imageContainer}>
+                        <Link href={`/buy/${item.id}`} as={`/buy/${item.id}`}>
+                          <div className={styles.imageWrapper}>
+                            <Image
+                              src={item.image}
+                              height={200}
+                              width={150}
+                              alt=""
+                              className={styles.image}
+                            />
+                          </div>
+                        </Link>
+                        <Box className={styles.iconGroup}>
+                          <Box>
+                            <ModeIcon 
+                              onClick={() => router.push(`/buy/${item.id}/edit`)}
+                              cursor="pointer"
+                            />
+                          </Box>
+                          <Box ml="5">
+                            <DeleteButton id={item.id} />
+                          </Box>
+                        </Box>
                       </Box>
                     );
                   }
                   return null;
                 })}
-              </HStack>
+              </Box>
             </Box>
             <Box width="50%" ml="10px">
               <p className={styles.category}>bottoms</p>
-              <HStack spacing="10px" display="flex" mt="3">
+              <Box className={styles.imageGroup}>
                 {items.map((item) => {
                   if(item.category === "bottoms" && item.itemStatus === "buy") {
-                    // console.log("コンソール",item)
                     return (
-                      <Box key ={item.id}>
-                        <Image
-                          src={item.image}
-                          height={144}
-                          width={144}
-                          alt=""
-                        />
-                        <ModeIcon />
-                        <DeleteOutlineIcon />
+                      <Box key ={item.id} className={styles.imageContainer}>
+                        <Link href={`/buy/${item.id}`} as={`/buy/${item.id}`}>
+                          <div className={styles.imageWrapper}>
+                            <Image
+                              src={item.image}
+                              height={200}
+                              width={150}
+                              alt=""
+                              className={styles.image}
+                            />
+                          </div>
+                        </Link>
+                        <Box className={styles.iconGroup}>
+                          <Box>
+                            <ModeIcon 
+                              onClick={() => router.push(`/buy/${item.id}/edit`)}
+                              cursor="pointer"
+                            />
+                          </Box>
+                          <Box ml="5">
+                            <DeleteButton id={item.id} /> 
+                          </Box>
+                        </Box>
                       </Box>
                     );
                   }
                   return null;
                 })}
-              </HStack>
+              </Box>
             </Box>
           </Box>
-          <Box display="flex" mt="10px">
+          <Box display="flex" height="300px" mt="10px">
             <Box width="50%">
               <p className={styles.category}>shoes</p>
-              <HStack spacing="10px" display="flex" mt="3">
+              <Box className={styles.imageGroup}>
                 {items.map((item) => {
                   if(item.category === "shoes" && item.itemStatus === "buy") {
-                    // console.log("コンソール",item)
                     return (
-                      <Box key ={item.id}>
-                        <Image
-                          src={item.image}
-                          height={144}
-                          width={144}
-                          alt=""
-                        />
-                        <ModeIcon />
-                        <DeleteOutlineIcon />
+                      <Box key ={item.id} className={styles.imageContainer}>
+                        <Link href={`/buy/${item.id}`} as={`/buy/${item.id}`}>
+                          <div className={styles.imageWrapper}>
+                            <Image
+                              src={item.image}
+                              height={200}
+                              width={150}
+                              alt=""
+                              className={styles.image}
+                            />
+                          </div>
+                        </Link>
+                        <Box className={styles.iconGroup}>
+                          <Box>
+                            <ModeIcon 
+                              onClick={() => router.push(`/buy/${item.id}/edit`)}
+                              cursor="pointer"
+                            />
+                          </Box>
+                          <Box ml="5">
+                            <DeleteButton id={item.id} />
+                          </Box>
+                        </Box>
                       </Box>
                     );
                   }
                   return null;
                 })}
-              </HStack>
+              </Box>
             </Box>
             <Box width="50%" ml="10px">
               <p className={styles.category}>others</p>
-              <HStack spacing="10px" display="flex" mt="3">
+              <Box className={styles.imageGroup}>
                 {items.map((item) => {
                   if(item.category === "others" && item.itemStatus === "buy") {
-                    // console.log("コンソール",item)
                     return (
-                      <Box key ={item.id}>
-                        <Image
-                          src={item.image}
-                          height={144}
-                          width={144}
-                          alt=""
-                        />
-                        <ModeIcon />
-                        <DeleteOutlineIcon />
+                      <Box key ={item.id} className={styles.imageContainer}>
+                        <Link href={`/buy/${item.id}`} as={`/buy/${item.id}`}>
+                          <div className={styles.imageWrapper}>
+                            <Image
+                              src={item.image}
+                              height={200}
+                              width={150}
+                              alt=""
+                              className={styles.image}
+                            />
+                          </div>
+                        </Link>
+                        <Box className={styles.iconGroup}>
+                          <Box>
+                            <ModeIcon 
+                              onClick={() => router.push(`/buy/${item.id}/edit`)}
+                              cursor="pointer"
+                            />
+                          </Box>
+                          <Box ml="5">
+                            <DeleteButton id={item.id} />
+                          </Box>
+                        </Box>
                       </Box>
                     );
                   }
                   return null;
                 })}
-              </HStack>
+              </Box>
             </Box>
           </Box>
         </Container>

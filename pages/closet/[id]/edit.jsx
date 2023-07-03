@@ -311,6 +311,7 @@ function EditClosetItem() {
                     value={amount} 
                     onChange={handleChangeAmount} 
                     className={styles.editChapter}
+                    type='number'
                   />
                   <div>Wearing season</div> 
                   <Select 

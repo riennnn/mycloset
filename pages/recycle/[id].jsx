@@ -45,7 +45,7 @@ function RecycleItem() {
           <div className={styles.outerBox}>
             <div className={styles.imageUplodeBox}>
               <Image
-                src={image}
+                src={image ?? ""}
                 alt="Item Image"
                 width={300}
                 height={300}

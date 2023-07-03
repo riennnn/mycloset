@@ -209,7 +209,7 @@ function CreateItem() {
                   </Select>
                   <Input 
                     placeholder="Purchase Amount ¥" 
-                    type='text'
+                    type='number'
                     value={amount}
                     onChange={e => setAmount(e.target.value)}
                   />

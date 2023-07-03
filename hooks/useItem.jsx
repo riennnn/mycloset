@@ -14,7 +14,7 @@ export const useItem = () => {
         console.log(data)
         return {
           id: doc.id,
-          image: data.image || "",
+          image: data.image || "/images/top.jpg",
           productName: data.productName || "",
           shopName: data.shopName || "",
           category: data.category || "",

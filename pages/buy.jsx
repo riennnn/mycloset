@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -14,11 +13,7 @@ import ModeIcon from '@mui/icons-material/Mode';
 
 function Buy() {
   const router = useRouter();
-  const {items,  readData} = useItem();
-
-  useEffect(() => {
-    readData();
-  },[])
+  const {items} = useItem();
 
   return (
     <div style={{background:"url(/images/baseWall2.jpg)"}}>

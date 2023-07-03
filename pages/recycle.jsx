@@ -15,11 +15,7 @@ import ModeIcon from '@mui/icons-material/Mode';
 
 function Recycle() {
   const router = useRouter();
-  const {items, readData} = useItem();
-
-  useEffect(() => {
-    readData();
-  },[])
+  const {items} = useItem();
 
   const [salesFilter, setSalesFilter] = useState("salesStatus");
   const [salesFilteredItems, setSalesFilteredItems] = useState([]);

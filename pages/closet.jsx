@@ -15,11 +15,7 @@ import ModeIcon from '@mui/icons-material/Mode';
 
 function Closet() {
   const router = useRouter();
-  const {items, readData} = useItem();
-
-  useEffect(() => {
-    readData();
-  },[])
+  const {items} = useItem();
 
   const [seasonFilter, setSeasonFilter] = useState("all season");
   const [seasonFilteredItems, setSeasonFilteredItems] = useState([]);

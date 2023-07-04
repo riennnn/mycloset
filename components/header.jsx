@@ -2,7 +2,24 @@ import { Box, Heading, Link, Spacer } from '@chakra-ui/react'
 import React from 'react'
 import DrawerMenu from './drawer'
 
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../libs/firebase';
+
 const Header = () => {
+  const [username, setUsername] = useState('');
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const displayName = user.displayName;
+        setUsername(displayName);
+      } else {
+        setUsername('');
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
 
   return (
     <div>
@@ -20,6 +37,9 @@ const Header = () => {
           </Link>
         </Heading>
         <Spacer />
+        <Box mt={2}>
+          <p>{username}さん</p>
+        </Box>
         <DrawerMenu />
       </Box>
     </div>

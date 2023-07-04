@@ -14,9 +14,7 @@ const SignHeader = () => {
           ml="20"
           fontWeight="light"
         >
-          <Link href='/top'>
-            My Closet
-          </Link>
+          My Closet
         </Heading>
       </Box>
     </div>

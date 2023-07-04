@@ -1,10 +1,15 @@
 import Head from 'next/head'
+import { useRouter } from "next/router";
 import styles from '../styles/Home.module.css'
 import { Button } from '@chakra-ui/react'
+import SignHeader from '../components/signHeader';
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <div style={{background:"url(/images/indexcloset.jpg)", backgroundSize: "cover", backgroundPosition: "50% 50%"}}>
+      <SignHeader />
       <div className={styles.container}>
         <Head>
           <title>My closet</title>

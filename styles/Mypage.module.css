@@ -1,0 +1,19 @@
+.outerBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: none;
+  padding: 36px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px gray;
+  color: gray;
+  background-color: rgba(220,220,220, 0.7);
+}
+
+.outerBox h2 {
+  font-weight: 600;
+  margin-top: 5px;
+}
+

@@ -13,10 +13,12 @@ import {
 } from '@chakra-ui/react'
 import MenuIcon from '@mui/icons-material/Menu';
 import { useDisclosure } from '@chakra-ui/react'
+import useLogout from '../hooks/useLogout';
 
 function DrawerMenu() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = React.useRef()
+  const logout = useLogout();
 
   return (
     <>
@@ -41,7 +43,7 @@ function DrawerMenu() {
             <Link href='/closet'><p>i have...</p></Link>
             <Link href='/buy'><p>i want to buy...</p></Link>
             <Link href='/recycle'><p>i want to recycle...</p></Link>
-            <p>log out</p>
+            <Link onClick={logout}><p>log out</p></Link>
             </VStack>
           </DrawerBody>
 

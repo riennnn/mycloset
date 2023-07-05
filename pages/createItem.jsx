@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from "../libs/firebase";
@@ -9,9 +9,11 @@ import styles from '../styles/Create.module.css'
 import { Box, Container, VStack, Input, Select, Textarea, Heading, Button, Spacer, Stack, Spinner } from '@chakra-ui/react';
 import { AddIcon, ArrowBackIcon } from '@chakra-ui/icons';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import useAuth from '../hooks/useAuth';
 
 
 function CreateItem() {
+  const router = useRouter();
   const {
     loading,
     isUploaded,
@@ -20,8 +22,8 @@ function CreateItem() {
     setImage,
     handleFileUpload,
   } = UseFileUpload();
+  const {user, authLoading} = useAuth();
 
-  const router = useRouter();
 
   const [productName, setProductName] = useState("");
   const [shopName, setShopName] = useState("");
@@ -91,171 +93,179 @@ function CreateItem() {
       }
   };
 
-  return (
-    <div style={{ background: "url(/images/createWall.jpg)" }}>
-      <Header />
+  useEffect(() => {
+    if (!user && !authLoading) {
+      router.push('/');
+    }
+  }, [user, authLoading, router]);
 
-      <Box maxW="1080px" margin="0 auto" className="createMain">
-        <Container w="100%" maxW="1080px">
-
-          <Box display="flex" mt="5">
-            <Heading 
-              as="h1"
-            >
-              New Item
-            </Heading>
-            <Spacer />
-            <Button
-              rightIcon={<ArrowBackIcon />}
-              colorScheme="blue"
-              variant="outline"
-              mr="10px"
-              onClick={() => router.push('/top')}
-            >
-              Back
-            </Button>
-
-            <Button
-              rightIcon={<AddIcon />}
-              colorScheme="blue"
-              variant="outline"
-              onClick={handleSubmit}
-            >
-              Add
-            </Button>
-          </Box>
-
-          <br />
-          <div className={styles.outerBox} >
-            <Box display="flex" >
-              <Box
-                alignItems="center" 
-                justifyContent="center" 
-                display="flex"
-                width="40%"
+  if (user) {
+    return (
+      <div style={{ background: "url(/images/createWall.jpg)" }}>
+        <Header />
+  
+        <Box maxW="1080px" margin="0 auto" className="createMain">
+          <Container w="100%" maxW="1080px">
+  
+            <Box display="flex" mt="5">
+              <Heading 
+                as="h1"
               >
-                {loading ? (
-                  <div className={styles.imageUplodeBox}>
-                    <Box>
-                      <Stack>
-                        <Spinner
-                          thickness="4px"
-                          speed="0.65s"
-                          emptyColor="gray.200"
-                          color="blue.500"
-                          size="xl"
-                          style={{margin: "0 auto"}}
-                        />
-                      </Stack>
-                      <h2>loading now</h2>
-                    </Box>
-                  </div>
-                ) : (
-                  <div className={styles.imageUplodeBox}>
-                    {isUploaded && (
-                      <>
-                        <Input
-                          className={styles.imageUploadInput}
-                          type="file"
-                          accept=".png, .jpeg, .jpg"
-                          onChange={handleFileUpload}
-                        />
-                        {imageURL && <img src={imageURL} alt="Uploaded" />}
-                      </>
-                    )}
-                    {!isUploaded && (
-                      <>
-                        <Input 
-                          className={styles.imageUploadInput} 
-                          type='file'
-                          accept='.png, .jpeg, .jpg'
-                          onChange={handleFileUpload}
-                        />
-                        <h2>New item</h2>
-                        <div className={styles.imageLogoAndText}>
-                          <CameraAltIcon sx={{ fontSize: 150 }} />
-                        </div>
-                      </>                
-                    )}
-                  </div>
-                )}
-              </Box>
-              <Box
-                width="60%"
-                ml="30px"
+                New Item
+              </Heading>
+              <Spacer />
+              <Button
+                rightIcon={<ArrowBackIcon />}
+                colorScheme="blue"
+                variant="outline"
+                mr="10px"
+                onClick={() => router.push('/top')}
               >
-                <VStack spacing={3} mt="3" width="500px">
-                  <Input
-                    placeholder="Product Name"
-                    type='text'
-                    value={productName}
-                    onChange={e => setProductName(e.target.value)}
-                  />
-                  <Input 
-                    placeholder="Shop Brand"
-                    type='text' 
-                    value={shopName}
-                    onChange={e => setShopName(e.target.value)}
-                  />
-                  <Select 
-                    placeholder="Category"
-                    value={category}
-                    onChange={e => setCategory(e.target.value)}
-                  >
-                    <option value="tops">Tops</option>
-                    <option value="bottoms">Bottoms</option>
-                    <option value="shoes">Shoes</option>
-                    <option value="others">Others</option>
-                  </Select>
-                  <Input 
-                    placeholder="Purchase Amount ¥" 
-                    type='number'
-                    value={amount}
-                    onChange={e => setAmount(e.target.value)}
-                  />
-                  <Select 
-                    placeholder="Wearing season"
-                    value={season}
-                    onChange={e => setSeason(e.target.value)}
-                  >
-                    <option value="spring">Spring</option>
-                    <option value="summer">Summer</option>
-                    <option value="autumn">Autumn</option>
-                    <option value="winter">Winter</option>
-                  </Select>
-                  <Textarea 
-                    placeholder="memo"
-                    type='text'
-                    value={memo}
-                    onChange={e => setMemo(e.target.value)}
-                  />
-                  <Select 
-                    placeholder="Item Status"
-                    value={itemStatus}
-                    onChange={e => setItemStatus(e.target.value)}
-                  >
-                    <option value="have">Have</option>
-                    <option value="buy">Buy</option>
-                    <option value="recycle">Recycle</option>
-                  </Select>
-                  <Select 
-                    placeholder="Sales Status"
-                    value={salesStatus}
-                    onChange={e => setSalesStatus(e.target.value)}
-                  >
-                    <option value="notStarted">Not started</option>
-                    <option value="uploading">Uploading to the app</option>
-                    <option value="sold">Sold</option>
-                    <option value="wasted">Wasted</option>
-                  </Select>
-                </VStack>
-              </Box>
+                Back
+              </Button>
+  
+              <Button
+                rightIcon={<AddIcon />}
+                colorScheme="blue"
+                variant="outline"
+                onClick={handleSubmit}
+              >
+                Add
+              </Button>
             </Box>
-          </div> 
-        </Container>
-      </Box>
-    </div>
-  );
+  
+            <br />
+            <div className={styles.outerBox} >
+              <Box display="flex" >
+                <Box
+                  alignItems="center" 
+                  justifyContent="center" 
+                  display="flex"
+                  width="40%"
+                >
+                  {loading ? (
+                    <div className={styles.imageUplodeBox}>
+                      <Box>
+                        <Stack>
+                          <Spinner
+                            thickness="4px"
+                            speed="0.65s"
+                            emptyColor="gray.200"
+                            color="blue.500"
+                            size="xl"
+                            style={{margin: "0 auto"}}
+                          />
+                        </Stack>
+                        <h2>loading now</h2>
+                      </Box>
+                    </div>
+                  ) : (
+                    <div className={styles.imageUplodeBox}>
+                      {isUploaded && (
+                        <>
+                          <Input
+                            className={styles.imageUploadInput}
+                            type="file"
+                            accept=".png, .jpeg, .jpg"
+                            onChange={handleFileUpload}
+                          />
+                          {imageURL && <img src={imageURL} alt="Uploaded" />}
+                        </>
+                      )}
+                      {!isUploaded && (
+                        <>
+                          <Input 
+                            className={styles.imageUploadInput} 
+                            type='file'
+                            accept='.png, .jpeg, .jpg'
+                            onChange={handleFileUpload}
+                          />
+                          <div className={styles.imageLogoAndText}>
+                            <CameraAltIcon sx={{ fontSize: 150 }} />
+                            <h2>New item</h2>
+                          </div>
+                        </>                
+                      )}
+                    </div>
+                  )}
+                </Box>
+                <Box
+                  width="60%"
+                  ml="30px"
+                >
+                  <VStack spacing={3} mt="3" width="500px">
+                    <Input
+                      placeholder="Product Name"
+                      type='text'
+                      value={productName}
+                      onChange={e => setProductName(e.target.value)}
+                    />
+                    <Input 
+                      placeholder="Shop Brand"
+                      type='text' 
+                      value={shopName}
+                      onChange={e => setShopName(e.target.value)}
+                    />
+                    <Select 
+                      placeholder="Category"
+                      value={category}
+                      onChange={e => setCategory(e.target.value)}
+                    >
+                      <option value="tops">Tops</option>
+                      <option value="bottoms">Bottoms</option>
+                      <option value="shoes">Shoes</option>
+                      <option value="others">Others</option>
+                    </Select>
+                    <Input 
+                      placeholder="Purchase Amount ¥" 
+                      type='number'
+                      value={amount}
+                      onChange={e => setAmount(e.target.value)}
+                    />
+                    <Select 
+                      placeholder="Wearing season"
+                      value={season}
+                      onChange={e => setSeason(e.target.value)}
+                    >
+                      <option value="spring">Spring</option>
+                      <option value="summer">Summer</option>
+                      <option value="autumn">Autumn</option>
+                      <option value="winter">Winter</option>
+                    </Select>
+                    <Textarea 
+                      placeholder="memo"
+                      type='text'
+                      value={memo}
+                      onChange={e => setMemo(e.target.value)}
+                    />
+                    <Select 
+                      placeholder="Item Status"
+                      value={itemStatus}
+                      onChange={e => setItemStatus(e.target.value)}
+                    >
+                      <option value="have">Have</option>
+                      <option value="buy">Buy</option>
+                      <option value="recycle">Recycle</option>
+                    </Select>
+                    <Select 
+                      placeholder="Sales Status"
+                      value={salesStatus}
+                      onChange={e => setSalesStatus(e.target.value)}
+                    >
+                      <option value="notStarted">Not started</option>
+                      <option value="uploading">Uploading to the app</option>
+                      <option value="sold">Sold</option>
+                      <option value="wasted">Wasted</option>
+                    </Select>
+                  </VStack>
+                </Box>
+              </Box>
+            </div> 
+          </Container>
+        </Box>
+      </div>
+    );
+  }
 };
 
 export default CreateItem

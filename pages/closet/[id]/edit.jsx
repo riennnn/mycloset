@@ -10,6 +10,7 @@ import { Box, Container, VStack, Input, Heading, Button, Spacer, Select, Textare
 import { ArrowBackIcon, ChevronDownIcon, RepeatIcon } from '@chakra-ui/icons';
 import { UseFileUpload } from '../../../hooks/useFileUpload';
 import useGetItemData from '../../../hooks/useGetItemData';
+import useAuth from '../../../hooks/useAuth';
 
 
 function EditClosetItem() {
@@ -46,6 +47,7 @@ function EditClosetItem() {
     editItem,
     setEditItem,
   } = useGetItemData(itemId, image, setImage);
+  const {user, authLoading} = useAuth();
 
    //入力したimage保持（画面上）
   const handleChangeImage = (e) => {
@@ -178,203 +180,208 @@ function EditClosetItem() {
     }
   }
 
+  useEffect(() => {
+    if (!user && !authLoading) {
+      router.push('/');
+    }
+  }, [user, authLoading, router]);
+
+  if (user) {
+    return (
+      <div style={{background:"url(/images/detailWall.jpg)"}}>
+        <Header />
   
-
-
-  return (
-    <div style={{background:"url(/images/detailWall.jpg)"}}>
-      <Header />
-
-      <Box maxW="1080px" margin="0 auto" className='main'>
-        <Container w="100%" maxW="1080px">
-
-          <Box display="flex" mt="3">
-            <Heading
-              as="h1"
-            >
-              My Closet Item ...
-            </Heading>
-            <Spacer />
-            <Button 
-              rightIcon={<ArrowBackIcon />} 
-              colorScheme='blue' 
-              variant='outline'
-              mr="10px"
-              onClick={() => router.push('/closet')}
-            >
-              Back
-            </Button>
-
-            <Button 
-              rightIcon={<RepeatIcon />} 
-              colorScheme='blue' 
-              variant='outline'
-              onClick={handleEditItem}
-            >
-              Update
-            </Button>
-          </Box>
-          
-          <br />
-          <div className={styles.outerBox}>
-            <Box display="flex">
-              <Box 
-                alignItems="center" 
-                justifyContent="center" 
-                display="flex"
-                width="50%"
+        <Box maxW="1080px" margin="0 auto" className='main'>
+          <Container w="100%" maxW="1080px">
+  
+            <Box display="flex" mt="3">
+              <Heading
+                as="h1"
               >
-                {loading ? (
-                    <div className={styles.imageUplodeBox}>
-                      <Box>
-                        <Stack>
-                          <Spinner
-                            thickness="4px"
-                            speed="0.65s"
-                            emptyColor="gray.200"
-                            color="blue.500"
-                            size="xl"
-                          />
-                        </Stack>
-                        <h2>loading now</h2>
-                      </Box>
-                    </div>
-                  ) : (
-                    <div className={styles.imageUplodeBox}>
-                      {isUploaded && (
-                        <>
-                          <Input
-                            className={styles.imageUploadInput}
-                            type="file"
-                            accept=".png, .jpeg, .jpg"
-                            onChange={handleFileUpload}
-                          />
-                          {imageURL && <img src={imageURL} alt="Uploaded" />}
-                        </>
-                      )}
-                      {!isUploaded && (
-                        <>
-                          <Image
-                            src={image}
-                            alt="Item Image"
-                            width={300}
-                            height={300}
-                          />
-                          <Input 
-                            className={styles.imageUploadInput} 
-                            value={image}
-                            onChange={handleChangeImage}
-                          />
-                          <Input 
-                            className={styles.imageUploadInput} 
-                            //以下追加
-                            type='file'
-                            accept='.png, .jpeg, .jpg'
-                            onChange={handleFileUpload}
-                          />
-                        </>                
-                      )}
-                    </div>
-                  )}
-              </Box>
-              <Box
-                width="50%"
+                My Closet Item ...
+              </Heading>
+              <Spacer />
+              <Button 
+                rightIcon={<ArrowBackIcon />} 
+                colorScheme='blue' 
+                variant='outline'
+                mr="10px"
+                onClick={() => router.push('/closet')}
               >
-                <VStack spacing={3} mt="3" width="600px">
-                  <div>Product Name</div>
-                  <Input 
-                    value={productName} 
-                    onChange={handleChangeProductName} 
-                    className={styles.editChapter}
-                  />
-                  <div>Shop Brand</div>
-                  <Input 
-                    value={shopName} 
-                    onChange={handleChangeShopName} 
-                    className={styles.editChapter}
-                  />
-                  <div>Category</div>
-                  <Select 
-                    value={category} 
-                    onChange={handleChangeCategory}  
-                    icon={<ChevronDownIcon />} 
-                    width="400px"  
-                    border="2px dashed #2d6395"
-                  >
-                    <option value="tops">Tops</option>
-                    <option value="bottoms">Bottoms</option>
-                    <option value="shoes">Shoes</option>
-                    <option value="others">Others</option>
-                  </Select>
-                  <div>Purchase Amount ¥ </div>
-                  <Input 
-                    value={amount} 
-                    onChange={handleChangeAmount} 
-                    className={styles.editChapter}
-                    type='number'
-                  />
-                  <div>Wearing season</div> 
-                  <Select 
-                    value={season} 
-                    onChange={handleChangeSeason} 
-                    icon={<ChevronDownIcon />} 
-                    width="400px"  
-                    border="2px dashed #2d6395"
-                  >
-                    <option value="spring">Spring</option>
-                    <option value="summer">Summer</option>
-                    <option value="autumn">Autumn</option>
-                    <option value="winter">Winter</option>
-                  </Select>  
-                  <div>Memo</div>
-                  <Textarea 
-                    value={memo} 
-                    onChange={handleChangeMemo} 
-                    className={styles.editChapter}
-                  />
-                  <div>Item Status</div>
-                  <Select 
-                    value={itemStatus} 
-                    onChange={handleChangeItemStatus} 
-                    icon={<ChevronDownIcon />} 
-                    width="400px"  
-                    border="2px dashed #2d6395"
-                  >
-                    <option value="have">Have</option>
-                    <option value="buy">Buy</option>
-                    <option value="recycle">Recycle</option>
-                  </Select>
-                  <div>Sales Status</div>
-                  <Select 
-                    value={salesStatus} 
-                    onChange={handleChangeSalesStatus} 
-                    icon={<ChevronDownIcon />} 
-                    width="400px"  
-                    border="2px dashed #2d6395"
-                  >
-                    <option value="notStarted">Not started</option>
-                    <option value="uploading">Uploading to the app</option>
-                    <option value="sold">Sold</option>
-                    <option value="wasted">Wasted</option>
-                  </Select>
-                </VStack>
+                Back
+              </Button>
+  
+              <Button 
+                rightIcon={<RepeatIcon />} 
+                colorScheme='blue' 
+                variant='outline'
+                onClick={handleEditItem}
+              >
+                Update
+              </Button>
+            </Box>
+            
+            <br />
+            <div className={styles.outerBox}>
+              <Box display="flex">
+                <Box 
+                  alignItems="center" 
+                  justifyContent="center" 
+                  display="flex"
+                  width="50%"
+                >
+                  {loading ? (
+                      <div className={styles.imageUplodeBox}>
+                        <Box>
+                          <Stack>
+                            <Spinner
+                              thickness="4px"
+                              speed="0.65s"
+                              emptyColor="gray.200"
+                              color="blue.500"
+                              size="xl"
+                            />
+                          </Stack>
+                          <h2>loading now</h2>
+                        </Box>
+                      </div>
+                    ) : (
+                      <div className={styles.imageUplodeBox}>
+                        {isUploaded && (
+                          <>
+                            <Input
+                              className={styles.imageUploadInput}
+                              type="file"
+                              accept=".png, .jpeg, .jpg"
+                              onChange={handleFileUpload}
+                            />
+                            {imageURL && <img src={imageURL} alt="Uploaded" />}
+                          </>
+                        )}
+                        {!isUploaded && (
+                          <>
+                            <Image
+                              src={image}
+                              alt="Item Image"
+                              width={300}
+                              height={300}
+                            />
+                            <Input 
+                              className={styles.imageUploadInput} 
+                              value={image}
+                              onChange={handleChangeImage}
+                            />
+                            <Input 
+                              className={styles.imageUploadInput} 
+                              //以下追加
+                              type='file'
+                              accept='.png, .jpeg, .jpg'
+                              onChange={handleFileUpload}
+                            />
+                          </>                
+                        )}
+                      </div>
+                    )}
+                </Box>
+                <Box
+                  width="50%"
+                >
+                  <VStack spacing={3} mt="3" width="600px">
+                    <div>Product Name</div>
+                    <Input 
+                      value={productName} 
+                      onChange={handleChangeProductName} 
+                      className={styles.editChapter}
+                    />
+                    <div>Shop Brand</div>
+                    <Input 
+                      value={shopName} 
+                      onChange={handleChangeShopName} 
+                      className={styles.editChapter}
+                    />
+                    <div>Category</div>
+                    <Select 
+                      value={category} 
+                      onChange={handleChangeCategory}  
+                      icon={<ChevronDownIcon />} 
+                      width="400px"  
+                      border="2px dashed #2d6395"
+                    >
+                      <option value="tops">Tops</option>
+                      <option value="bottoms">Bottoms</option>
+                      <option value="shoes">Shoes</option>
+                      <option value="others">Others</option>
+                    </Select>
+                    <div>Purchase Amount ¥ </div>
+                    <Input 
+                      value={amount} 
+                      onChange={handleChangeAmount} 
+                      className={styles.editChapter}
+                      type='number'
+                    />
+                    <div>Wearing season</div> 
+                    <Select 
+                      value={season} 
+                      onChange={handleChangeSeason} 
+                      icon={<ChevronDownIcon />} 
+                      width="400px"  
+                      border="2px dashed #2d6395"
+                    >
+                      <option value="spring">Spring</option>
+                      <option value="summer">Summer</option>
+                      <option value="autumn">Autumn</option>
+                      <option value="winter">Winter</option>
+                    </Select>  
+                    <div>Memo</div>
+                    <Textarea 
+                      value={memo} 
+                      onChange={handleChangeMemo} 
+                      className={styles.editChapter}
+                    />
+                    <div>Item Status</div>
+                    <Select 
+                      value={itemStatus} 
+                      onChange={handleChangeItemStatus} 
+                      icon={<ChevronDownIcon />} 
+                      width="400px"  
+                      border="2px dashed #2d6395"
+                    >
+                      <option value="have">Have</option>
+                      <option value="buy">Buy</option>
+                      <option value="recycle">Recycle</option>
+                    </Select>
+                    <div>Sales Status</div>
+                    <Select 
+                      value={salesStatus} 
+                      onChange={handleChangeSalesStatus} 
+                      icon={<ChevronDownIcon />} 
+                      width="400px"  
+                      border="2px dashed #2d6395"
+                    >
+                      <option value="notStarted">Not started</option>
+                      <option value="uploading">Uploading to the app</option>
+                      <option value="sold">Sold</option>
+                      <option value="wasted">Wasted</option>
+                    </Select>
+                  </VStack>
+                </Box>
+              </Box>
+            </div>
+            <Box display="flex" float="right" mt="10px">
+              <Box>
+                <p>Create Date:</p>
+                <DateDisplay date={createDate}/>
+              </Box>
+              <Box ml="20px">
+                <p>Update Date:</p>
+                <DateDisplay date={updateDate}/>
               </Box>
             </Box>
-          </div>
-          <Box display="flex" float="right" mt="10px">
-            <Box>
-              <p>Create Date:</p>
-              <DateDisplay date={createDate}/>
-            </Box>
-            <Box ml="20px">
-              <p>Update Date:</p>
-              <DateDisplay date={updateDate}/>
-            </Box>
-          </Box>
-        </Container>
-      </Box>
-    </div>
-  )
-}
+          </Container>
+        </Box>
+      </div>
+    );
+  }
+};
 
-export default EditClosetItem
+export default EditClosetItem;

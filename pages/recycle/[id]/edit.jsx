@@ -47,7 +47,7 @@ function EditRecycleItem() {
     editItem,
     setEditItem,
   } = useGetItemData(itemId, image, setImage);
-  const {user, authLoading} = useAuth();
+  // const {user, authLoading} = useAuth();
 
 
    //入力したimage保持（画面上）
@@ -180,13 +180,13 @@ function EditRecycleItem() {
   }
 
   
-  useEffect(() => {
-    if (!user && !authLoading) {
-      router.push('/');
-    }
-  }, [user, authLoading, router]);
+  // useEffect(() => {
+  //   if (!user && !authLoading) {
+  //     router.push('/');
+  //   }
+  // }, [user, authLoading, router]);
 
-  if (user) {
+  // if (user) {
     return (
       <div style={{background:"url(/images/detailWall.jpg)"}}>
         <Header />
@@ -380,7 +380,7 @@ function EditRecycleItem() {
         </Box>
       </div>
     );
-  }
+  // }
 };
 
 export default EditRecycleItem;

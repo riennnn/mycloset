@@ -22,7 +22,7 @@ function CreateItem() {
     setImage,
     handleFileUpload,
   } = UseFileUpload();
-  const {user, authLoading} = useAuth();
+  // const {user, authLoading} = useAuth();
 
 
   const [productName, setProductName] = useState("");
@@ -93,13 +93,13 @@ function CreateItem() {
       }
   };
 
-  useEffect(() => {
-    if (!user && !authLoading) {
-      router.push('/');
-    }
-  }, [user, authLoading, router]);
+  // useEffect(() => {
+  //   if (!user && !authLoading) {
+  //     router.push('/');
+  //   }
+  // }, [user, authLoading, router]);
 
-  if (user) {
+  // if (user) {
     return (
       <div style={{ background: "url(/images/createWall.jpg)" }}>
         <Header />
@@ -265,7 +265,7 @@ function CreateItem() {
         </Box>
       </div>
     );
-  }
+  // }
 };
 
 export default CreateItem

@@ -8,7 +8,7 @@ import { DateDisplay } from '../../../components/dateDisplay';
 import styles from '../../../styles/Create.module.css'
 import { Box, Container, VStack, Input, Heading, Button, Spacer, Select, Textarea, Stack, Spinner } from '@chakra-ui/react';
 import { ArrowBackIcon, ChevronDownIcon, RepeatIcon } from '@chakra-ui/icons';
-import { UseFileUpload } from '../../../hooks/useFileUpload';
+import { useFileUpload } from '../../../hooks/useFileUpload';
 import useGetItemData from '../../../hooks/useGetItemData';
 import useAuth from '../../../hooks/useAuth';
 
@@ -24,7 +24,7 @@ function EditBuyItem() {
     image,
     setImage,
     handleFileUpload,
-  } = UseFileUpload();
+  } = useFileUpload();
   const {
     productName,
     setProductName,
@@ -258,7 +258,7 @@ function EditBuyItem() {
                             {imageURL && <img src={imageURL} alt="Uploaded" />}
                           </>
                         )}
-                        {!isUploaded && (
+                        {!isUploaded && image && (
                           <>
                             <Image
                               src={image}

@@ -52,14 +52,16 @@ function ClosetItem() {
             
             <br />
             <div className={styles.outerBox}>
-              <div className={styles.imageUplodeBox}>
-                <Image
-                  src={image ?? ""}
-                  alt="Item Image"
-                  width={300}
-                  height={300}
-                />
-              </div>
+              {image && (
+                <div className={styles.imageUplodeBox}>
+                  <Image
+                    src={image ?? ""}
+                    alt="Item Image"
+                    width={300}
+                    height={300}
+                  />
+                </div>
+              )}
   
               <VStack spacing={3} mt="3" width="600px">
                 <p>Product Name: {productName}</p>

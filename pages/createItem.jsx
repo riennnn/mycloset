@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from "../libs/firebase";
 import { UseSaveImageData } from '../hooks/useSaveImageData';
-import { UseFileUpload } from '../hooks/useFileUpload';
+import { useFileUpload } from '../hooks/useFileUpload';
 import Header from '../components/header'
 import styles from '../styles/Create.module.css'
 import { Box, Container, VStack, Input, Select, Textarea, Heading, Button, Spacer, Stack, Spinner } from '@chakra-ui/react';
@@ -21,7 +21,7 @@ function CreateItem() {
     image,
     setImage,
     handleFileUpload,
-  } = UseFileUpload();
+  } = useFileUpload();
   // const {user, authLoading} = useAuth();
 
 

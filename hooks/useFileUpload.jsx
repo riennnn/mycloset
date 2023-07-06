@@ -3,7 +3,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage } from "../libs/firebase";
 
 
-export const UseFileUpload = () => {
+export const useFileUpload = () => {
   const [loading, setLoading] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
   const [imageURL, setImageURL] = useState(null);

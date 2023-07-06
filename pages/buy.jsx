@@ -5,8 +5,7 @@ import { useItem } from "../hooks/useItem"
 import Header from '../components/header'
 import { DeleteButton } from '../components/DeleteButton';
 import styles from '../styles/Closet.module.css'
-import { Box, Heading} from '@chakra-ui/react'
-import { Container } from 'semantic-ui-react';
+import { Box, Container, Heading} from '@chakra-ui/react'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ModeIcon from '@mui/icons-material/Mode';
 import { useEffect } from 'react';

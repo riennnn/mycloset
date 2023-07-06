@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
-import Header from '../components/header'
-import styles from '../styles/Mypage.module.css'
-import { Box, Container, VStack, Input, Heading, Button, Spacer, Text } from '@chakra-ui/react';
-import { ArrowBackIcon, RepeatIcon } from '@chakra-ui/icons';
+import { useRouter } from 'next/router';
 import { updateProfile } from "firebase/auth";
 import { auth } from "../libs/firebase";
-import { useRouter } from 'next/router';
 import useAuth from '../hooks/useAuth';
+import Header from '../components/header'
+import styles from '../styles/Mypage.module.css'
+import { Container, VStack, Input, Heading, Button,  Text, Flex } from '@chakra-ui/react';
+import { ArrowBackIcon, RepeatIcon } from '@chakra-ui/icons';
 
 function Mypage() {
   const router = useRouter();
   const {user, authLoading} = useAuth();
-
   const [updatedData, setUpdatedData] = useState({
     username: "",
   });
@@ -57,40 +56,51 @@ function Mypage() {
       <div style={{background:"url(/images/mypage.jpeg)", backgroundSize: "cover"}}>
         <Header username={updatedData.username} />
   
-        <Box maxW="1080px" margin="0 auto" className='main'>
-          <Container w="100%" maxW="1080px">
-  
-            <Box display="flex">
+        <Container 
+          maxW="1080px" 
+          margin="0 auto" 
+          className='main'
+        >
+          <Container 
+            w="100%" 
+            maxW="1080px"
+          >
+            <Flex
+              justify="space-between"
+              direction={["column", "row"]}
+              align={["center", "flex-start"]}
+            >
               <Heading
                 as="h1"
               >
                 My profile ...
               </Heading>
-              <Spacer />
-              <Button 
-                rightIcon={<ArrowBackIcon />} 
-                colorScheme='brown' 
-                variant='outline'
-                mr="10px"
-                backgroundColor='gray.200'
-                onClick={() => router.push('/top')}
-              >
-                Top Page
-              </Button>
-              <Button 
-                rightIcon={<RepeatIcon />} 
-                colorScheme='brown' 
-                variant='outline'
-                backgroundColor='gray.200'
-                onClick={handleFormSubmit}
-              >
-                Update
-              </Button>
-            </Box>
-            
+              <Flex>
+                <Button 
+                  rightIcon={<ArrowBackIcon />} 
+                  colorScheme='brown' 
+                  variant='outline'
+                  mr="10px"
+                  backgroundColor='gray.200'
+                  onClick={() => router.push('/top')}
+                >
+                  Top Page
+                </Button>
+                <Button 
+                  rightIcon={<RepeatIcon />} 
+                  colorScheme='brown' 
+                  variant='outline'
+                  backgroundColor='gray.200'
+                  onClick={handleFormSubmit}
+                >
+                  Update
+                </Button>
+              </Flex>
+            </Flex>
+              
             <br />
             <div className={styles.outerBox}>
-              <VStack spacing={3} width="400px">
+              <VStack spacing={3} width={["100%", "400px"]}>
                 <p>※User Nameのみ更新できます</p>
                 <Text fontWeight="bold">User Name</Text>
                 <Input
@@ -125,7 +135,7 @@ function Mypage() {
               </VStack>
             </div>
           </Container>
-        </Box>
+        </Container>
       </div>        
     );
   }

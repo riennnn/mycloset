@@ -6,7 +6,7 @@ import { UseSaveImageData } from '../hooks/useSaveImageData';
 import { useFileUpload } from '../hooks/useFileUpload';
 import Header from '../components/header'
 import styles from '../styles/Create.module.css'
-import { Box, Container, VStack, Input, Select, Textarea, Heading, Button, Spacer, Stack, Spinner } from '@chakra-ui/react';
+import { Box, Container, VStack, Input, Select, Textarea, Heading, Button, Spacer, Stack, Spinner, Flex } from '@chakra-ui/react';
 import { AddIcon, ArrowBackIcon } from '@chakra-ui/icons';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import useAuth from '../hooks/useAuth';
@@ -104,44 +104,56 @@ function CreateItem() {
       <div style={{ background: "url(/images/createWall.jpg)" }}>
         <Header />
   
-        <Box maxW="1080px" margin="0 auto" className="createMain">
-          <Container w="100%" maxW="1080px">
-  
-            <Box display="flex" mt="5">
+        <Container 
+          maxW="1080px" 
+          margin="0 auto" 
+          className="createMain"
+        >
+          <Container 
+            w="100%" 
+            maxW="1080px"
+          >
+            <Flex 
+              justify="space-between"
+              direction={["column", "row"]}
+              align={["center", "flex-start"]}
+              mt="15px"
+            >
               <Heading 
                 as="h1"
               >
                 New Item
               </Heading>
-              <Spacer />
-              <Button
-                rightIcon={<ArrowBackIcon />}
-                colorScheme="blue"
-                variant="outline"
-                mr="10px"
-                onClick={() => router.push('/top')}
-              >
-                Back
-              </Button>
-  
-              <Button
-                rightIcon={<AddIcon />}
-                colorScheme="blue"
-                variant="outline"
-                onClick={handleSubmit}
-              >
-                Add
-              </Button>
-            </Box>
+              <Flex>
+                <Button
+                  rightIcon={<ArrowBackIcon />}
+                  colorScheme="blue"
+                  variant="outline"
+                  mr="10px"
+                  onClick={() => router.push('/top')}
+                >
+                  Back
+                </Button>
+                <Button
+                  rightIcon={<AddIcon />}
+                  colorScheme="blue"
+                  variant="outline"
+                  onClick={handleSubmit}
+                >
+                  Add
+                </Button>
+              </Flex>
+            </Flex>
   
             <br />
             <div className={styles.outerBox} >
-              <Box display="flex" >
+              <Flex direction={["column", "row"]}>
                 <Box
                   alignItems="center" 
                   justifyContent="center" 
                   display="flex"
-                  width="40%"
+                  width={["100%", "40%"]}
+                  mb={["20px", "0"]}
                 >
                   {loading ? (
                     <div className={styles.imageUplodeBox}>
@@ -190,10 +202,10 @@ function CreateItem() {
                   )}
                 </Box>
                 <Box
-                  width="60%"
-                  ml="30px"
+                  width={["100%", "60%"]}
+                  ml={["0", "30px"]}
                 >
-                  <VStack spacing={3} mt="3" width="500px">
+                  <VStack spacing={3} mt="3" width={["100%","500px"]}>
                     <Input
                       placeholder="Product Name"
                       type='text'
@@ -259,10 +271,10 @@ function CreateItem() {
                     </Select>
                   </VStack>
                 </Box>
-              </Box>
+              </Flex>
             </div> 
           </Container>
-        </Box>
+        </Container>
       </div>
     );
   // }

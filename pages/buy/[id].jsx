@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Image from 'next/image';
 import { useRouter } from  "next/router";
-import Header from '../../components/header'
-import styles from '../../styles/Create.module.css'
-import useGetItem from '../../hooks/useGetItem';
-import { DateDisplay } from '../../components/dateDisplay';
-import { Box, Container, VStack, Heading, Button, Spacer } from '@chakra-ui/react';
-import { ArrowBackIcon } from '@chakra-ui/icons';
 import useAuth from '../../hooks/useAuth';
+import useGetItem from '../../hooks/useGetItem';
+import Header from '../../components/header'
+import { DateDisplay } from '../../components/dateDisplay';
+import styles from '../../styles/Create.module.css'
+import { Box, Container, VStack, Heading, Button, Spacer, Flex } from '@chakra-ui/react';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 
 
 function BuyItem() {
@@ -28,16 +28,22 @@ function BuyItem() {
       <div style={{background:"url(/images/detailWall.jpg)"}}>
         <Header />
   
-        <Box maxW="1080px" margin="0 auto" className='main'>
+        <Container 
+          maxW="1080px" 
+          margin="0 auto" 
+          className='main'
+        >
           <Container w="100%" maxW="1080px">
-  
-            <Box display="flex">
+            <Flex
+              justify="space-between"
+              direction={["column", "row"]}
+              align={["center", "flex-start"]}
+            >
               <Heading
                 as="h1"
               >
                 Item i want...
               </Heading>
-              <Spacer />
               <Button 
                 rightIcon={<ArrowBackIcon />} 
                 colorScheme='blue' 
@@ -47,11 +53,10 @@ function BuyItem() {
               >
                 Back
               </Button>
-              
-            </Box>
+            </Flex>
             
             <br />
-            <div className={styles.outerBox}>
+            <Box className={styles.outerBox}>
               {image && (
                 <div className={styles.imageUplodeBox}>
                   <Image
@@ -63,7 +68,7 @@ function BuyItem() {
                 </div>
               )}
   
-              <VStack spacing={3} mt="3" width="600px">
+              <VStack spacing={3} mt="3" width={["100%","600px"]}>
                 <p>Product Name: {productName}</p>
                 <p>Shop Brand: {shopName}</p>
                 <p>Category: {category}</p>
@@ -72,8 +77,11 @@ function BuyItem() {
                 <p>Memo: {memo}</p>
                 <p>Sales Status: {salesStatus}</p>
               </VStack>
-            </div>
-            <Box display="flex" float="right" mt="10px">
+            </Box>
+            <Flex 
+              mt="10px"
+              justify={["center", "flex-end"]}
+            >
               <Box>
                 <p>Create Date:</p>
                 <DateDisplay date={createDate}/>
@@ -82,9 +90,9 @@ function BuyItem() {
                 <p>Update Date:</p>
                 <DateDisplay date={updateDate}/>
               </Box>
-            </Box>
+            </Flex>
           </Container>
-        </Box>
+        </Container>
       </div>
     );
   }

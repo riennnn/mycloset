@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react'
-import { useRouter } from  "next/router";
+import { useEffect } from 'react'
 import Image from 'next/image';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../libs/firebase';
+import { useRouter } from  "next/router";
+import useAuth from '../../../hooks/useAuth';
+import useGetItemData from '../../../hooks/useGetItemData';
+import { useFileUpload } from '../../../hooks/useFileUpload';
 import Header from '../../../components/header'
 import { DateDisplay } from '../../../components/dateDisplay';
 import styles from '../../../styles/Create.module.css'
-import { Box, Container, VStack, Input, Heading, Button, Spacer, Select, Textarea, Stack, Spinner } from '@chakra-ui/react';
+import { Box, Container, VStack, Input, Heading, Button, Select, Textarea, Stack, Spinner, Flex } from '@chakra-ui/react';
 import { ArrowBackIcon, ChevronDownIcon, RepeatIcon } from '@chakra-ui/icons';
-import { useFileUpload } from '../../../hooks/useFileUpload';
-import useGetItemData from '../../../hooks/useGetItemData';
-import useAuth from '../../../hooks/useAuth';
 
 
 function EditRecycleItem() {
@@ -48,7 +48,6 @@ function EditRecycleItem() {
     setEditItem,
   } = useGetItemData(itemId, image, setImage);
   // const {user, authLoading} = useAuth();
-
 
    //入力したimage保持（画面上）
   const handleChangeImage = (e) => {
@@ -169,7 +168,6 @@ function EditRecycleItem() {
     } catch (error) {
       console.log("error");
     }
-    // topページに戻る
     if (editItem.itemStatus === "have") {
       router.push('/closet');
     } else if (editItem.itemStatus === "buy") {
@@ -179,7 +177,6 @@ function EditRecycleItem() {
     }
   }
 
-  
   // useEffect(() => {
   //   if (!user && !authLoading) {
   //     router.push('/');
@@ -191,101 +188,121 @@ function EditRecycleItem() {
       <div style={{background:"url(/images/detailWall.jpg)"}}>
         <Header />
   
-        <Box maxW="1080px" margin="0 auto" className='main'>
-          <Container w="100%" maxW="1080px">
-  
-            <Box display="flex" mt="3">
+        <Container 
+          maxW="1080px" 
+          margin="0 auto" 
+          className='main'
+        >
+          <Container 
+            w="100%"
+            maxW="1080px"
+          >
+            <Flex 
+              justify="space-between"
+              direction={["column", "row"]}
+              align={["center", "flex-start"]}
+              mt="3"
+            >
               <Heading
                 as="h1"
               >
                 Item to Recycle ...
               </Heading>
-              <Spacer />
-              <Button 
-                rightIcon={<ArrowBackIcon />} 
-                colorScheme='blue' 
-                variant='outline'
-                mr="10px"
-                onClick={() => router.push('/recycle')}
-              >
-                Back
-              </Button>
-  
-              <Button 
-                rightIcon={<RepeatIcon />} 
-                colorScheme='blue' 
-                variant='outline'
-                onClick={handleEditItem}
-              >
-                Update
-              </Button>
-            </Box>
+              <Flex>
+                <Button 
+                  rightIcon={<ArrowBackIcon />} 
+                  colorScheme='blue' 
+                  variant='outline'
+                  mr="10px"
+                  onClick={() => router.push('/recycle')}
+                >
+                  Back
+                </Button>
+                <Button 
+                  rightIcon={<RepeatIcon />} 
+                  colorScheme='blue' 
+                  variant='outline'
+                  onClick={handleEditItem}
+                >
+                  Update
+                </Button>
+              </Flex>
+            </Flex>
             
             <br />
-            <div className={styles.outerBox}>
-              <Box display="flex">
+            <Box className={styles.outerBox}>
+              <Flex 
+                direction={["column", "row"]} 
+              >
                 <Box 
                   alignItems="center" 
                   justifyContent="center" 
                   display="flex"
-                  width="50%"
+                  width={["100%", "40%"]}
+                  mb={["20px", "0"]}
                 >
                   {loading ? (
-                      <div className={styles.imageUplodeBox}>
-                        <Box>
-                          <Stack>
-                            <Spinner
-                              thickness="4px"
-                              speed="0.65s"
-                              emptyColor="gray.200"
-                              color="blue.500"
-                              size="xl"
-                            />
-                          </Stack>
-                          <h2>loading now</h2>
-                        </Box>
-                      </div>
-                    ) : (
-                      <div className={styles.imageUplodeBox}>
-                        {isUploaded && (
-                          <>
-                            <Input
-                              className={styles.imageUploadInput}
-                              type="file"
-                              accept=".png, .jpeg, .jpg"
-                              onChange={handleFileUpload}
-                            />
-                            {imageURL && <img src={imageURL} alt="Uploaded" />}
-                          </>
-                        )}
-                        {!isUploaded && image && (
-                          <>
-                            <Image
-                              src={image}
-                              alt="Item Image"
-                              width={300}
-                              height={300}
-                            />
-                            <Input 
-                              className={styles.imageUploadInput} 
-                              value={image}
-                              onChange={handleChangeImage}
-                            />
-                            <Input 
-                              className={styles.imageUploadInput} 
-                              type='file'
-                              accept='.png, .jpeg, .jpg'
-                              onChange={handleFileUpload}
-                            />
-                          </>                
-                        )}
-                      </div>
-                    )}
+                    <div className={styles.imageUplodeBox}>
+                      <Box>
+                        <Stack>
+                          <Spinner
+                            thickness="4px"
+                            speed="0.65s"
+                            emptyColor="gray.200"
+                            color="blue.500"
+                            size="xl"
+                            style={{margin: "0 auto"}}
+                          />
+                        </Stack>
+                        <h2>loading now</h2>
+                      </Box>
+                    </div>
+                  ) : (
+                    <div className={styles.imageUplodeBox}>
+                      {isUploaded && (
+                        <>
+                          <Input
+                            className={styles.imageUploadInput}
+                            type="file"
+                            accept=".png, .jpeg, .jpg"
+                            onChange={handleFileUpload}
+                          />
+                          {imageURL && <img src={imageURL} alt="Uploaded" />}
+                        </>
+                      )}
+                      {!isUploaded && image && (
+                        <>
+                          <Image
+                            src={image}
+                            alt="Item Image"
+                            width={300}
+                            height={300}
+                          />
+                          <Input 
+                            className={styles.imageUploadInput} 
+                            value={image}
+                            onChange={handleChangeImage}
+                          />
+                          <Input 
+                            className={styles.imageUploadInput} 
+                            type='file'
+                            accept='.png, .jpeg, .jpg'
+                            onChange={handleFileUpload}
+                          />
+                        </>                
+                      )}
+                    </div>
+                  )}
                 </Box>
                 <Box
-                  width="50%"
+                  width={["100%", "60%"]}
+                  ml={["0", "30px"]}
                 >
-                  <VStack spacing={3} mt="3" width="600px">
+                  <VStack 
+                    spacing={3} 
+                    mt="3" 
+                    width={["100%","500px"]}
+                  >
                     <div>Product Name</div>
                     <Input 
                       value={productName} 
@@ -303,7 +320,7 @@ function EditRecycleItem() {
                       value={category} 
                       onChange={handleChangeCategory}  
                       icon={<ChevronDownIcon />} 
-                      width="400px"  
+                      width={["100%","400px"]}  
                       border="2px dashed #2d6395"
                     >
                       <option value="tops">Tops</option>
@@ -323,7 +340,7 @@ function EditRecycleItem() {
                       value={season} 
                       onChange={handleChangeSeason} 
                       icon={<ChevronDownIcon />} 
-                      width="400px"  
+                      width={["100%","400px"]} 
                       border="2px dashed #2d6395"
                     >
                       <option value="spring">Spring</option>
@@ -342,7 +359,7 @@ function EditRecycleItem() {
                       value={itemStatus} 
                       onChange={handleChangeItemStatus} 
                       icon={<ChevronDownIcon />} 
-                      width="400px"  
+                      width={["100%","400px"]}  
                       border="2px dashed #2d6395"
                     >
                       <option value="have">Have</option>
@@ -354,7 +371,7 @@ function EditRecycleItem() {
                       value={salesStatus} 
                       onChange={handleChangeSalesStatus} 
                       icon={<ChevronDownIcon />} 
-                      width="400px"  
+                      width={["100%","400px"]}  
                       border="2px dashed #2d6395"
                     >
                       <option value="notStarted">Not started</option>
@@ -364,9 +381,12 @@ function EditRecycleItem() {
                     </Select>
                   </VStack>
                 </Box>
-              </Box>
-            </div>
-            <Box display="flex" float="right" mt="10px">
+              </Flex>
+            </Box>
+            <Flex 
+              mt="10px"
+              justify={["center", "flex-end"]}
+            >
               <Box>
                 <p>Create Date:</p>
                 <DateDisplay date={createDate}/>
@@ -375,9 +395,9 @@ function EditRecycleItem() {
                 <p>Update Date:</p>
                 <DateDisplay date={updateDate}/>
               </Box>
-            </Box>
+            </Flex>
           </Container>
-        </Box>
+        </Container>
       </div>
     );
   // }

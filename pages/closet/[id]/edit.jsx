@@ -304,14 +304,14 @@ function EditClosetItem() {
                   width={["100%","500px"]}
                 >
                   <div>Product Name</div>
-                  <Input 
+                  <input 
                     value={productName}
                     id='productName' 
                     onChange={handleChangeProductName} 
                     className={styles.editChapter}
                   />
                   <div>Shop Brand</div>
-                  <Input 
+                  <input 
                     value={shopName} 
                     id='shopName'
                     onChange={handleChangeShopName} 
@@ -332,7 +332,7 @@ function EditClosetItem() {
                     <option value="others">Others</option>
                   </Select>
                   <div>Purchase Amount ¥ </div>
-                  <Input 
+                  <input 
                     value={amount} 
                     id='amount'
                     onChange={handleChangeAmount} 
@@ -354,7 +354,7 @@ function EditClosetItem() {
                     <option value="winter">Winter</option>
                   </Select>  
                   <div>Memo</div>
-                  <Textarea 
+                  <textarea 
                     value={memo}
                     id='memo' 
                     onChange={handleChangeMemo} 

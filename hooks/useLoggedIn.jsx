@@ -9,9 +9,7 @@ const useLoggedIn = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsLoggedIn(user);
-      } else {
+      if (!user) {
         router.push('/');
       }
     })

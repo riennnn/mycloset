@@ -201,17 +201,20 @@ function CreateItem() {
                   <Input
                     placeholder="Product Name"
                     type='text'
+                    id='productName'
                     value={productName}
                     onChange={e => setProductName(e.target.value)}
                   />
                   <Input 
                     placeholder="Shop Brand"
-                    type='text' 
+                    type='text'
+                    id='shopName' 
                     value={shopName}
                     onChange={e => setShopName(e.target.value)}
                   />
                   <Select 
                     placeholder="Category"
+                    id='category'
                     value={category}
                     onChange={e => setCategory(e.target.value)}
                   >
@@ -223,11 +226,13 @@ function CreateItem() {
                   <Input 
                     placeholder="Purchase Amount ¥" 
                     type='number'
+                    id='amount'
                     value={amount}
                     onChange={e => setAmount(e.target.value)}
                   />
                   <Select 
                     placeholder="Wearing season"
+                    id='season'
                     value={season}
                     onChange={e => setSeason(e.target.value)}
                   >
@@ -239,11 +244,13 @@ function CreateItem() {
                   <Textarea 
                     placeholder="memo"
                     type='text'
+                    id='memo'
                     value={memo}
                     onChange={e => setMemo(e.target.value)}
                   />
                   <Select 
                     placeholder="Item Status"
+                    id='itemStatus'
                     value={itemStatus}
                     onChange={e => setItemStatus(e.target.value)}
                   >
@@ -253,6 +260,7 @@ function CreateItem() {
                   </Select>
                   <Select 
                     placeholder="Sales Status"
+                    id='salesStatus'
                     value={salesStatus}
                     onChange={e => setSalesStatus(e.target.value)}
                   >

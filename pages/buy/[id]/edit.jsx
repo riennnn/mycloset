@@ -272,7 +272,8 @@ function EditBuyItem() {
                           height={300}
                         />
                         <Input 
-                          className={styles.imageUploadInput} 
+                          className={styles.imageUploadInput}
+                          id='image'
                           value={image}
                           onChange={handleChangeImage}
                         />
@@ -298,19 +299,22 @@ function EditBuyItem() {
                 >
                   <div>Product Name</div>
                   <Input 
-                    value={productName} 
+                    value={productName}
+                    id='productName'
                     onChange={handleChangeProductName} 
                     className={styles.editChapter}
                   />
                   <div>Shop Brand</div>
                   <Input 
                     value={shopName} 
+                    id='shopName'
                     onChange={handleChangeShopName} 
                     className={styles.editChapter}
                   />
                   <div>Category</div>
                   <Select 
                     value={category} 
+                    id='category'
                     onChange={handleChangeCategory}  
                     icon={<ChevronDownIcon />} 
                     width={["100%","400px"]}      
@@ -323,7 +327,8 @@ function EditBuyItem() {
                   </Select>
                   <div>Purchase Amount ¥ </div>
                   <Input 
-                    value={amount} 
+                    value={amount}
+                    id='amount' 
                     onChange={handleChangeAmount} 
                     className={styles.editChapter}
                     type='number'
@@ -331,6 +336,7 @@ function EditBuyItem() {
                   <div>Wearing season</div> 
                   <Select 
                     value={season} 
+                    id='season'
                     onChange={handleChangeSeason} 
                     icon={<ChevronDownIcon />} 
                     width={["100%","400px"]}     
@@ -344,12 +350,14 @@ function EditBuyItem() {
                   <div>Memo</div>
                   <Textarea 
                     value={memo} 
+                    id='memo'
                     onChange={handleChangeMemo} 
                     className={styles.editChapter}
                   />
                   <div>Item Status</div>
                   <Select 
                     value={itemStatus} 
+                    id='itemStatus'
                     onChange={handleChangeItemStatus} 
                     icon={<ChevronDownIcon />} 
                     width={["100%","400px"]}     
@@ -362,6 +370,7 @@ function EditBuyItem() {
                   <div>Sales Status</div>
                   <Select 
                     value={salesStatus} 
+                    id='salesStatus'
                     onChange={handleChangeSalesStatus} 
                     icon={<ChevronDownIcon />} 
                     width={["100%","400px"]}      

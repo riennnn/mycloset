@@ -273,6 +273,7 @@ function EditClosetItem() {
                         />
                         <Input 
                           className={styles.imageUploadInput} 
+                          id='image'
                           value={image}
                           onChange={handleChangeImage}
                         />
@@ -298,19 +299,22 @@ function EditClosetItem() {
                 >
                   <div>Product Name</div>
                   <Input 
-                    value={productName} 
+                    value={productName}
+                    id='productName' 
                     onChange={handleChangeProductName} 
                     className={styles.editChapter}
                   />
                   <div>Shop Brand</div>
                   <Input 
                     value={shopName} 
+                    id='shopName'
                     onChange={handleChangeShopName} 
                     className={styles.editChapter}
                   />
                   <div>Category</div>
                   <Select 
-                    value={category} 
+                    value={category}
+                    id='category' 
                     onChange={handleChangeCategory}  
                     icon={<ChevronDownIcon />} 
                     width={["100%","400px"]}    
@@ -324,6 +328,7 @@ function EditClosetItem() {
                   <div>Purchase Amount ¥ </div>
                   <Input 
                     value={amount} 
+                    id='amount'
                     onChange={handleChangeAmount} 
                     className={styles.editChapter}
                     type='number'
@@ -331,6 +336,7 @@ function EditClosetItem() {
                   <div>Wearing season</div> 
                   <Select 
                     value={season} 
+                    id='season'
                     onChange={handleChangeSeason} 
                     icon={<ChevronDownIcon />} 
                     width={["100%","400px"]}  
@@ -343,13 +349,15 @@ function EditClosetItem() {
                   </Select>  
                   <div>Memo</div>
                   <Textarea 
-                    value={memo} 
+                    value={memo}
+                    id='memo' 
                     onChange={handleChangeMemo} 
                     className={styles.editChapter}
                   />
                   <div>Item Status</div>
                   <Select 
                     value={itemStatus} 
+                    id='itemStatus'
                     onChange={handleChangeItemStatus} 
                     icon={<ChevronDownIcon />} 
                     width={["100%","400px"]}   
@@ -362,6 +370,7 @@ function EditClosetItem() {
                   <div>Sales Status</div>
                   <Select 
                     value={salesStatus} 
+                    id='salesStatus'
                     onChange={handleChangeSalesStatus} 
                     icon={<ChevronDownIcon />} 
                     width={["100%","400px"]}    

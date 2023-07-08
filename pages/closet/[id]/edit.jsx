@@ -254,7 +254,7 @@ function EditClosetItem() {
                   <div className={styles.imageUplodeBox}>
                     {isUploaded && (
                       <>
-                        <Input
+                        <input
                           className={styles.imageUploadInput}
                           type="file"
                           accept=".png, .jpeg, .jpg"
@@ -277,13 +277,13 @@ function EditClosetItem() {
                           width={300}
                           height={300}
                         />
-                        <Input 
+                        <input 
                           className={styles.imageUploadInput} 
                           id='image'
                           value={image}
                           onChange={handleChangeImage}
                         />
-                        <Input 
+                        <input 
                           className={styles.imageUploadInput} 
                           type='file'
                           accept='.png, .jpeg, .jpg'

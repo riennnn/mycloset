@@ -9,7 +9,7 @@ import { useFileUpload } from '../../../hooks/useFileUpload';
 import Header from '../../../components/header'
 import { DateDisplay } from '../../../components/dateDisplay';
 import styles from '../../../styles/Create.module.css'
-import { Box, Container, VStack, Input, Heading, Button, Select, Textarea, Stack, Spinner, Flex } from '@chakra-ui/react';
+import { Box, Container, VStack, Heading, Button, Select, Stack, Spinner, Flex } from '@chakra-ui/react';
 import { ArrowBackIcon, ChevronDownIcon, RepeatIcon } from '@chakra-ui/icons';
 
 
@@ -254,7 +254,7 @@ function EditRecycleItem() {
                   <div className={styles.imageUplodeBox}>
                     {isUploaded && (
                       <>
-                        <Input
+                        <input
                           className={styles.imageUploadInput}
                           type="file"
                           accept=".png, .jpeg, .jpg"
@@ -277,13 +277,13 @@ function EditRecycleItem() {
                           width={300}
                           height={300}
                         />
-                        <Input 
+                        <input 
                           className={styles.imageUploadInput} 
                           id='image'
                           value={image}
                           onChange={handleChangeImage}
                         />
-                        <Input 
+                        <input 
                           className={styles.imageUploadInput} 
                           type='file'
                           accept='.png, .jpeg, .jpg'
@@ -304,14 +304,14 @@ function EditRecycleItem() {
                   width={["100%","500px"]}
                 >
                   <div>Product Name</div>
-                  <Input 
+                  <input 
                     value={productName} 
                     id='productName'
                     onChange={handleChangeProductName} 
                     className={styles.editChapter}
                   />
                   <div>Shop Brand</div>
-                  <Input 
+                  <input 
                     value={shopName} 
                     id='shopName'
                     onChange={handleChangeShopName} 
@@ -332,7 +332,7 @@ function EditRecycleItem() {
                     <option value="others">Others</option>
                   </Select>
                   <div>Purchase Amount ¥ </div>
-                  <Input 
+                  <input 
                     value={amount}
                     id='amount' 
                     onChange={handleChangeAmount} 
@@ -354,7 +354,7 @@ function EditRecycleItem() {
                     <option value="winter">Winter</option>
                   </Select>  
                   <div>Memo</div>
-                  <Textarea 
+                  <textarea 
                     value={memo} 
                     id='memo'
                     onChange={handleChangeMemo} 

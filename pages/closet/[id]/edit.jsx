@@ -9,7 +9,7 @@ import { useFileUpload } from '../../../hooks/useFileUpload';
 import Header from '../../../components/header'
 import { DateDisplay } from '../../../components/dateDisplay';
 import styles from '../../../styles/Create.module.css'
-import { Box, Container, VStack, Input, Heading, Button, Select, Textarea, Stack, Spinner, Flex } from '@chakra-ui/react';
+import { Box, Container, VStack, Heading, Button, Select, Stack, Spinner, Flex } from '@chakra-ui/react';
 import { ArrowBackIcon, ChevronDownIcon, RepeatIcon } from '@chakra-ui/icons';
 
 

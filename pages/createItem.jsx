@@ -22,7 +22,7 @@ function CreateItem() {
     setImage,
     handleFileUpload,
   } = useFileUpload();
-  // const isLoggedIn = useLoggedIn();
+  const isLoggedIn = useLoggedIn();
 
   const [productName, setProductName] = useState("");
   const [shopName, setShopName] = useState("");

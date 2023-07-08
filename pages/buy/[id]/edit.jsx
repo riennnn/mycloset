@@ -17,7 +17,7 @@ function EditBuyItem() {
   const router = useRouter();
   const itemId = router.query.id;
   // console.log(router)
-  // const isLoggedIn = useLoggedIn();
+  const isLoggedIn = useLoggedIn();
   const {
     loading,
     isUploaded,

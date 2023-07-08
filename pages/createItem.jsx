@@ -168,7 +168,7 @@ function CreateItem() {
                   <div className={styles.imageUplodeBox}>
                     {isUploaded && (
                       <>
-                        <Input
+                        <input
                           className={styles.imageUploadInput}
                           type="file"
                           accept=".png, .jpeg, .jpg"
@@ -186,7 +186,7 @@ function CreateItem() {
                     )}
                     {!isUploaded && (
                       <>
-                        <Input 
+                        <input 
                           className={styles.imageUploadInput} 
                           type='file'
                           accept='.png, .jpeg, .jpg'

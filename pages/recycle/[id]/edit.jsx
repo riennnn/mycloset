@@ -260,7 +260,13 @@ function EditRecycleItem() {
                           accept=".png, .jpeg, .jpg"
                           onChange={handleFileUpload}
                         />
-                        {imageURL && <img src={imageURL} alt="Uploaded" />}
+                        {imageURL && (
+                          <Image 
+                            src={imageURL} alt="Uploaded"
+                            width={300}
+                            height={300}
+                          />
+                        )}
                       </>
                     )}
                     {!isUploaded && image && (

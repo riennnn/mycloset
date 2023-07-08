@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from "../libs/firebase";
@@ -173,7 +174,14 @@ function CreateItem() {
                           accept=".png, .jpeg, .jpg"
                           onChange={handleFileUpload}
                         />
-                        {imageURL && <img src={imageURL} alt="Uploaded" />}
+                        {imageURL && (
+                          <Image
+                            src={imageURL} 
+                            alt="Uploaded"
+                            width={300}
+                            height={300}
+                          />
+                        )}
                       </>
                     )}
                     {!isUploaded && (

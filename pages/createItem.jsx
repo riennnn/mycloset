@@ -34,6 +34,18 @@ function CreateItem() {
   const [itemStatus, setItemStatus] = useState("");
   const [salesStatus, setSalesStatus] = useState("");
 
+  const resetState = () => {
+    setImage("");
+    setProductName(""),
+    setShopName("");
+    setCategory("");
+    setAmount("");
+    setSeason("");
+    setMemo("");
+    setItemStatus("");
+    setSalesStatus("");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!image || !image.name) {
@@ -72,15 +84,7 @@ function CreateItem() {
         createDate: serverTimestamp(),
         updateDate: serverTimestamp(),
       });
-      setImage("");
-      setProductName(""),
-      setShopName("");
-      setCategory("");
-      setAmount("");
-      setSeason("");
-      setMemo("");
-      setItemStatus("");
-      setSalesStatus("");
+      resetState()
       if (itemStatus === "have") {
         router.push('/closet');
       } else if (itemStatus === "buy") {
@@ -92,6 +96,33 @@ function CreateItem() {
       console.error("Error:", error); 
       }
   };
+
+  const CATEGORY = [
+    {value: "tops", title: "Tops"},
+    {value: "bottoms", title: "Bottoms"},
+    {value: "shoes", title: "Shoes"},
+    {value: "others", title: "Others"},
+  ]
+
+  const SEASON = [
+    {value: "spring", title: "Spring"},
+    {value: "summer", title: "Summer"},
+    {value: "autumn", title: "Autumn"},
+    {value: "winter", title: "Winter"},
+  ]
+
+  const ITEMSTATUS = [
+    {value: "have", title: "Have"},
+    {value: "buy", title: "Buy"},
+    {value: "recycle", title: "Recycle"},
+  ]
+
+  const SALESSTATUS = [
+    {value: "notStarted", title: "Not started"},
+    {value: "uploading", title: "Uploading to the app"},
+    {value: "sold", title: "Sold"},
+    {value: "wasted", title: "Wasted"},
+  ]
 
   return (
     <div style={{ background: "url(/images/createWall.jpg)" }}>
@@ -226,10 +257,8 @@ function CreateItem() {
                     value={category}
                     onChange={e => setCategory(e.target.value)}
                   >
-                    <option value="tops">Tops</option>
-                    <option value="bottoms">Bottoms</option>
-                    <option value="shoes">Shoes</option>
-                    <option value="others">Others</option>
+                    {CATEGORY.map(({value, title}) =><option key={value} value={value}>{title}</option>)
+                    }
                   </Select>
                   <Input 
                     placeholder="Purchase Amount ¥" 
@@ -244,10 +273,8 @@ function CreateItem() {
                     value={season}
                     onChange={e => setSeason(e.target.value)}
                   >
-                    <option value="spring">Spring</option>
-                    <option value="summer">Summer</option>
-                    <option value="autumn">Autumn</option>
-                    <option value="winter">Winter</option>
+                    {SEASON.map(({value, title}) =><option key={value} value={value}>{title}</option>)
+                    }
                   </Select>
                   <Textarea 
                     placeholder="memo"
@@ -262,9 +289,8 @@ function CreateItem() {
                     value={itemStatus}
                     onChange={e => setItemStatus(e.target.value)}
                   >
-                    <option value="have">Have</option>
-                    <option value="buy">Buy</option>
-                    <option value="recycle">Recycle</option>
+                    {ITEMSTATUS.map(({value, title}) =><option key={value} value={value}>{title}</option>)
+                    }
                   </Select>
                   <Select 
                     placeholder="Sales Status"
@@ -272,10 +298,8 @@ function CreateItem() {
                     value={salesStatus}
                     onChange={e => setSalesStatus(e.target.value)}
                   >
-                    <option value="notStarted">Not started</option>
-                    <option value="uploading">Uploading to the app</option>
-                    <option value="sold">Sold</option>
-                    <option value="wasted">Wasted</option>
+                    {SALESSTATUS.map(({value, title}) =><option key={value} value={value}>{title}</option>)
+                    }
                   </Select>
                 </VStack>
               </Box>

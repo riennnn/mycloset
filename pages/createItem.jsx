@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from "../libs/firebase";
-import { UseSaveImageData } from '../hooks/useSaveImageData';
+import useSaveImageData from '../hooks/useSaveImageData';
 import { useFileUpload } from '../hooks/useFileUpload';
 import Header from '../components/header'
 import styles from '../styles/Create.module.css'
@@ -36,7 +36,7 @@ function CreateItem() {
 
   const resetState = () => {
     setImage("");
-    setProductName(""),
+    setProductName("");
     setShopName("");
     setCategory("");
     setAmount("");
@@ -70,7 +70,7 @@ function CreateItem() {
       }
 
     try {
-      await UseSaveImageData(image.name, imageURL);
+      await useSaveImageData(image.name, imageURL);
       await addDoc(collection(db, "items"), {
         image:imageURL,
         productName: productName,

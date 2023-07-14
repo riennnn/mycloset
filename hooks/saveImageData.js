@@ -2,7 +2,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../libs/firebase";
 
 // Cloud Firestoreに画像のメタデータを保存
-function useSaveImageData  (name, url)  {
+function saveImageData  (name, url)  {
   return addDoc(collection(db, 'images'), {
     name: name,
     url: url,
@@ -10,4 +10,4 @@ function useSaveImageData  (name, url)  {
   });
 }
 
-export default useSaveImageData;
+export default saveImageData;
